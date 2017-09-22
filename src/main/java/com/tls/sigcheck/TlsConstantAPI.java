@@ -45,6 +45,8 @@ public class TlsConstantAPI {
             "usersig=xxx&identifier=admin&sdkappid=88888888&random=99999999&contenttype=json";
 
     /*-------- 2.单聊消息接口 ---------*/
+    public static final String Dan=TLSAPI+"im_open_login_svc/kick?" +
+            "usersig=xxx&identifier=admin&sdkappid=88888888&random=99999999&contenttype=json";
 
     /*-------- 3.消息推送接口 ---------*/
 

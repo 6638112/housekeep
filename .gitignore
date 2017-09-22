@@ -8,3 +8,16 @@
 out
 gen
 /target/
+/out
+/checkouts
+/.lein-*
+/.env
+.DS_Store
+.svn
+.project
+.settings
+.classpath
+logs
+/log
+/tmp
+hotspot.log
