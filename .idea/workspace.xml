@@ -6,13 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aad5ab76-8da8-4566-90cf-50b33950b0ed" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/tls/sigcheck/TlsUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/tls/sigcheck/TlsUtil.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tls/sigcheck/TlsConstantAPI.class" afterPath="$PROJECT_DIR$/target/classes/com/tls/sigcheck/TlsConstantAPI.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/connxun/util/properties/OpeProperties.class" afterPath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/connxun/util/properties/OpeProperties.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/connxun/util/qcloud/LiveConstantAPI.class" afterPath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/connxun/util/qcloud/LiveConstantAPI.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/tls/sigcheck/TlsConstantAPI.class" afterPath="$PROJECT_DIR$/target/housekeep-1.0-SNAPSHOT/WEB-INF/classes/com/tls/sigcheck/TlsConstantAPI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -1094,7 +1091,7 @@
       <workItem from="1505699453031" duration="27167000" />
       <workItem from="1505786308784" duration="43920000" />
       <workItem from="1505957209511" duration="27114000" />
-      <workItem from="1506043517195" duration="3543000" />
+      <workItem from="1506043517195" duration="3561000" />
     </task>
     <task id="LOCAL-00001" summary="commit .gitignore">
       <created>1506043877769</created>
@@ -1124,11 +1121,18 @@
       <option name="project" value="LOCAL" />
       <updated>1506047084324</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="commit .gitignore">
+      <created>1506047121356</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1506047121356</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150137000" />
+    <option name="totallyTimeSpent" value="150155000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="98" y="37" width="1801" height="969" extended-state="0" />
