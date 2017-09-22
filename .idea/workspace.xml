@@ -5,9 +5,8 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/com/connxun/app/controller/LwLoginController.java" line="305" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aad5ab76-8da8-4566-90cf-50b33950b0ed" name="Default" comment="commit .gitignore">
+    <list default="true" id="aad5ab76-8da8-4566-90cf-50b33950b0ed" name="Default" comment="commit pom">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -1151,7 +1150,7 @@
       <workItem from="1505699453031" duration="27167000" />
       <workItem from="1505786308784" duration="43920000" />
       <workItem from="1505957209511" duration="27114000" />
-      <workItem from="1506043517195" duration="3930000" />
+      <workItem from="1506043517195" duration="4024000" />
     </task>
     <task id="LOCAL-00001" summary="commit .gitignore">
       <created>1506043877769</created>
@@ -1195,15 +1194,21 @@
       <option name="project" value="LOCAL" />
       <updated>1506047132691</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="commit pom">
+      <created>1506047561507</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1506047561507</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150524000" />
+    <option name="totallyTimeSpent" value="150618000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="98" y="37" width="1801" height="969" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1228,7 +1233,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22035928" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22035928" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29066986" sideWeight="0.49766082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
@@ -1292,7 +1297,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit .gitignore" />
+    <MESSAGE value="commit pom" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit pom" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
