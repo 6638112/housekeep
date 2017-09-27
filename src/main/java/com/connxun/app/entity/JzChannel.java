@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "jz_channel")
-public class Jzchannel implements Serializable {
+public class JzChannel implements Serializable {
 
     private static final long serialVersionUID = 4855392861394240319L;
 
