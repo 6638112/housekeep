@@ -1,5 +1,7 @@
 package com.connxun.app.searchVO;
 
+import io.swagger.annotations.ApiParam;
+
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-18 14:16
@@ -7,18 +9,12 @@ package com.connxun.app.searchVO;
  */
 public class JzChannelSearchVO extends CommonSearchVO {
 
-    private Integer id;
+    @ApiParam("频道ID")
     private String channelNo;
+    @ApiParam("频道名称")
     private String channelName;
+    @ApiParam("频道状态")
     private Integer channelStatus;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getChannelNo() {
         return channelNo;

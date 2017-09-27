@@ -40,7 +40,7 @@ public class TlsSigUtil {
 //        sdkAppid=OpeProperties.GetValueByKey("","tls.sdkappid").trim();
         sdkAppid=SDKAPPID;
 
-        String os = OpeProperties.GetValueByKey("","os.name").trim();
+        String os = opeProperties.GetValueByKey("","os.name").trim();
 
         /*判断操作系统类型*/
         if(os.toLowerCase().startsWith("windows")){

@@ -1,7 +1,7 @@
 package com.connxun.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,25 +19,30 @@ public class Jzchannel implements Serializable {
 
     private static final long serialVersionUID = 4855392861394240319L;
 
+    //内部ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     Integer id;
-
-    String channel_id;
+    //频道ID
+    @JsonProperty("channel_id")
+    String channelId;
     //直播间名称
-    String channel_name;
+    @JsonProperty("channel_name")
+    String channelName;
     //直播间状态 0:断流；1:开启；3:关闭
-    Integer channel_status;
+    @JsonProperty("channel_status")
+    Integer channelStatus;
     //创建码
-    String create_mode;
+    @JsonProperty("create_mode")
+    String createMode;
     //创建时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    Date create_time;
+    @JsonProperty("create_time")
+    Date createTime;
     //水印
-    @JsonIgnore
-    String watermark_id;
+    @JsonProperty("watermark_id")
+    String watermarkId;
 
     public Integer getId() {
         return id;
@@ -47,51 +52,51 @@ public class Jzchannel implements Serializable {
         this.id = id;
     }
 
-    public String getChannel_id() {
-        return channel_id;
+    public String getChannelId() {
+        return channelId;
     }
 
-    public void setChannel_id(String channel_id) {
-        this.channel_id = channel_id;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
-    public String getChannel_name() {
-        return channel_name;
+    public String getChannelName() {
+        return channelName;
     }
 
-    public void setChannel_name(String channel_name) {
-        this.channel_name = channel_name;
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 
-    public Integer getChannel_status() {
-        return channel_status;
+    public Integer getChannelStatus() {
+        return channelStatus;
     }
 
-    public void setChannel_status(Integer channel_status) {
-        this.channel_status = channel_status;
+    public void setChannelStatus(Integer channelStatus) {
+        this.channelStatus = channelStatus;
     }
 
-    public String getCreate_mode() {
-        return create_mode;
+    public String getCreateMode() {
+        return createMode;
     }
 
-    public void setCreate_mode(String create_mode) {
-        this.create_mode = create_mode;
+    public void setCreateMode(String createMode) {
+        this.createMode = createMode;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getWatermark_id() {
-        return watermark_id;
+    public String getWatermarkId() {
+        return watermarkId;
     }
 
-    public void setWatermark_id(String watermark_id) {
-        this.watermark_id = watermark_id;
+    public void setWatermarkId(String watermarkId) {
+        this.watermarkId = watermarkId;
     }
 }
