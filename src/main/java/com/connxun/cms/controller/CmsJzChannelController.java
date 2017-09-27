@@ -1,7 +1,7 @@
 package com.connxun.cms.controller;
 
 
-import com.connxun.app.entity.Jzchannel;
+import com.connxun.app.entity.JzChannel;
 import com.connxun.app.jsonBean.ChannelListBean;
 import com.connxun.app.searchVO.JzChannelSearchVO;
 import com.connxun.app.service.JzChannelService;
@@ -43,6 +43,7 @@ public class CmsJzChannelController extends BaseController {
         ModelAndView mv = new ModelAndView("/cms/channel/index");
         return mv;
     }
+
     @RequestMapping(value = "toAdd", method = RequestMethod.GET)
     public ModelAndView toAdd(Integer type) {
         ModelAndView mv = new ModelAndView("/cms/channel/add");
@@ -59,7 +60,7 @@ public class CmsJzChannelController extends BaseController {
     @ResponseBody
     public DataTablesResult getList(JzChannelSearchVO searchVO) {
         DataTablesResult result = new DataTablesResult();
-        List<Jzchannel> list = jzChannelService.getList(searchVO);
+        List<JzChannel> list = jzChannelService.getList(searchVO);
         result.setDraw(searchVO.getDraw());//每个字段在实体中都有注释
         result.setRecordsFiltered(searchVO.getTotal());//每个字段在实体中都有注释
         result.setRecordsTotal(searchVO.getTotal());//每个字段在实体中都有注释
@@ -73,7 +74,7 @@ public class CmsJzChannelController extends BaseController {
      * @param
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(Jzchannel jzchannel) {
+    public String save(JzChannel jzchannel) {
         int user_id = getCurrentUser().getUser_id();//调用父类的方法获取当前用户session
         if (StringUtil.isNullOrEmpty(jzchannel.getId() + "")) {
             jzchannel.setCreateMode(""+user_id);//如果第一次数据，没有id  曾新增一个创建人
@@ -91,7 +92,7 @@ public class CmsJzChannelController extends BaseController {
      */
     @RequestMapping(value = "findOne", method = RequestMethod.GET)
     @ResponseBody
-    public Jzchannel findOne(int id) {
+    public JzChannel findOne(int id) {
         return jzChannelService.findOne(id);
     }
 
@@ -111,7 +112,7 @@ public class CmsJzChannelController extends BaseController {
      */
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
     @ResponseBody
-    public List<Jzchannel> findAll() {
+    public List<JzChannel> findAll() {
         return jzChannelService.findAll();
     }
 
@@ -122,7 +123,7 @@ public class CmsJzChannelController extends BaseController {
      */
     @RequestMapping(value = "toUpdate", method = RequestMethod.GET)
     public ModelAndView toUpdate(Integer id ) {
-        Jzchannel lwTeacher = jzChannelService.findOne(id);
+        JzChannel lwTeacher = jzChannelService.findOne(id);
         ModelAndView mv = new ModelAndView("/cms/channel/update");
         mv.addObject("lwTeacher", lwTeacher);
         return mv;
@@ -140,9 +141,9 @@ public class CmsJzChannelController extends BaseController {
         String jsonResult=LiveChannelGetChannelList();
         ChannelListBean channelListBean=(ChannelListBean)JsonUtil.toObject(ChannelListBean.class,jsonResult);
         if (channelListBean.getRet()==0){
-            List<Jzchannel> list=channelListBean.getOutput().getChannel_list();
+            List<JzChannel> list=channelListBean.getOutput().getChannel_list();
             if (list.size()>0){
-                for (Jzchannel jzchannel:
+                for (JzChannel jzchannel:
                      list) {
                     jzChannelService.save(jzchannel);
                 }

@@ -4,11 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class DateUtil {
     /**
@@ -174,11 +170,7 @@ public class DateUtil {
     public static long getMinDifference(Date date1, Date date2) {
         return (date1.getTime() - date2.getTime()) / (1000*60);
     }
-    public static void main(String[] args) {
-        Date date = stringToDate("2017-08-08 06:00","yyyy-MM-dd HH:mm");
-        Date date1 = stringToDate("2017-08-08 07:15","yyyy-MM-dd HH:mm");
-        System.out.println( getMinDifference(date,date1));
-    }
+
 
 
     /**
@@ -356,5 +348,16 @@ public class DateUtil {
 
     }
 
+    /*UTC时间转换为标准时间*/
+    public static Date getUTCtoGMT(int utc){
+        return new Date(Long.valueOf(utc)*1000);
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getUTCtoGMT(1505974532));
+//        Date date = stringToDate("2017-08-08 06:00","yyyy-MM-dd HH:mm");
+//        Date date1 = stringToDate("2017-08-08 07:15","yyyy-MM-dd HH:mm");
+//        System.out.println( getMinDifference(date,date1));
+    }
 }

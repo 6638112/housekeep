@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-25 10:00
- * @Comments：各类api调用封装的listentity
+ * @Comments：各类api调用封装的ListEntity
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TlsListEntity {
@@ -19,8 +19,19 @@ public class TlsListEntity {
     @JsonProperty("Accounts")
     List<String> accounts;
 
+    //获取群组详细资料list
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("GroupIdList")
+    List<String> groupIdList;
 
 
+    public List<String> getGroupIdList() {
+        return groupIdList;
+    }
+
+    public void setGroupIdList(List<String> groupIdList) {
+        this.groupIdList = groupIdList;
+    }
 
     public List<String> getAccounts() {
         return accounts;

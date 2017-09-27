@@ -2,9 +2,9 @@ package com.connxun.app.repositories.impl;
 
 import com.alibaba.druid.sql.PagerUtils;
 import com.alibaba.druid.util.JdbcConstants;
-import com.connxun.app.entity.JzChannel;
-import com.connxun.app.repositories.JzChannelRepositoryCustom;
-import com.connxun.app.searchVO.JzChannelSearchVO;
+import com.connxun.app.entity.JzMember;
+import com.connxun.app.repositories.JzMemberRepositoryCustom;
+import com.connxun.app.searchVO.JzMemberSearchVO;
 import com.connxun.util.string.StringUtil;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -18,30 +18,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author：luoxiaosheng
- * @Date：2017-09-18 14:20
- * @Comments：
+ * Created by anna on 2017-09-27.
  */
 @Repository
-public class JzChannelRepositoryImpl  extends JdbcDaoSupport implements JzChannelRepositoryCustom {
+public class JzMemberRepositoryImpl   extends JdbcDaoSupport implements JzMemberRepositoryCustom {
 
-    public JzChannelRepositoryImpl(DataSource dataSource) {
+    public JzMemberRepositoryImpl(DataSource dataSource) {
         super.setDataSource(dataSource);
     }
 
     @Override
-    public List<JzChannel> getList(JzChannelSearchVO searchVO) {
+    public List<JzMember> getList(JzMemberSearchVO searchVO) {
         String sql = "";
 
 
         sql = "select lv.*  " +
-                "  from jz_channel lv where 1=1";
+                "  from jz_member lv where 1=1";
 
 
         sql += createSearchSql(searchVO);//调用创建查询sql方法
 
-        sql += " ORDER BY lv.createTime DESC, lv.channelStatus ASC ";
-
+        sql += " ORDER BY lv.createTime DESC ";
 
 
         SqlParameterSource params = new BeanPropertySqlParameterSource(searchVO);//实例化一个查询类，用来注入查询数据 根据（:+字段值）
@@ -52,7 +49,7 @@ public class JzChannelRepositoryImpl  extends JdbcDaoSupport implements JzChanne
             searchVO.setTotal(count);
             sql = PagerUtils.limit(sql, JdbcConstants.MYSQL, searchVO.getPage(), searchVO.getLength());//工具类创建分页sql
 
-            return jdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(JzChannel.class));//执行sql 返回数据
+            return jdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(JzMember.class));//执行sql 返回数据
         }
         return new ArrayList<>();
     }
@@ -63,21 +60,16 @@ public class JzChannelRepositoryImpl  extends JdbcDaoSupport implements JzChanne
      * @param searchVO 查询条件
      * @return 查询sql
      */
-    private String createSearchSql(JzChannelSearchVO searchVO) {
+    private String createSearchSql(JzMemberSearchVO searchVO) {
         String sql = "";
-        if (StringUtil.isNotNullOrEmpty(searchVO.getChannelNo())) { //判断是否为null或者""
-            sql += " and lv.channelId = :channelNo ";
-        }
-        if (StringUtil.isNotNullOrEmpty(searchVO.getChannelName())) { //判断是否为null或者""
-            sql += " and lv.channelName like :channelNameParam ";
-        }
-        if (searchVO.getChannelStatus() != null) { //判断是否为null或者""
-            sql += " and lv.channelStatus like :channelStatus ";
+//        if (StringUtil.isNotNullOrEmpty(searchVO.getGroupNo())) { //判断是否为null或者""
+//            sql += " and lv.groupId = :groupNo ";
+//        }
+        if (StringUtil.isNotNullOrEmpty(searchVO.getMemberName())) { //判断是否为null或者""
+            sql += " and lv.memberAccount like :groupNameParam ";
         }
 
         return sql;
 
     }
-
-
 }

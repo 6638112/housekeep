@@ -38,17 +38,19 @@ public class JzGroup implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM.dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-    //群资料变更次数
-    private Integer infoSeq;
     //群组最后一次信息变更时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM.dd HH:mm:ss", timezone = "GMT+8")
     private Date lastInfoTime;
     //群组内最后发消息的时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM.dd HH:mm:ss", timezone = "GMT+8")
     private Date lastMsgTime;
     //群内下一条消息的Seq
     private Integer nextMsgSeq;
     //最大群成员数量
     private Integer maxMemberNum;
-    //申请加群处理方式  FreeAccess
+    //申请加群处理方式  FreeAccess（自由加入），NeedPermission（需要验证），DisableApply（禁止加群）
     private String applyJoinOption;
 
 
@@ -116,14 +118,6 @@ public class JzGroup implements Serializable {
         this.owner_Account = owner_Account;
     }
 
-
-    public Integer getInfoSeq() {
-        return infoSeq;
-    }
-
-    public void setInfoSeq(Integer infoSeq) {
-        this.infoSeq = infoSeq;
-    }
 
     public Date getCreateTime() {
         return createTime;

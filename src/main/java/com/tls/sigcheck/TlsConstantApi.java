@@ -58,28 +58,51 @@ public class TlsConstantApi {
     public static final String IM_REMOVE_ALL_TAGS = TLSAPI+"openim/im_remove_all_tags?";
 
     /*-------- 4.群组管理接口 ---------*/
+    //获取APP中的所有群组
     public static final String GROUP_LIST = TLSAPI+"group_open_http_svc/get_appid_group_list?";
+    //创建群组
     public static final String CREATE_GROUP = TLSAPI+"group_open_http_svc/create_group?";
+    //获取群组详细资料
     public static final String GET_GROUP_INFO = TLSAPI+"group_open_http_svc/get_group_info?";
+    //获取群成员详细资料
     public static final String GET_GROUP_MEMBER_INFO = TLSAPI+"group_open_http_svc/get_group_member_info?";
+    //修改群组基础资料
     public static final String MODIFY_GROUP_BASE_INFO = TLSAPI+"group_open_http_svc/modify_group_base_info?";
+    //增加群组成员
     public static final String ADD_GROUP_MEMBER = TLSAPI+"group_open_http_svc/add_group_member?";
+    //删除群组成员
     public static final String DELETE_GROUP_MEMBER = TLSAPI+"group_open_http_svc/delete_group_member?";
+    //修改群组成员资料
     public static final String MODIFY_GROUP_MEMBER_INFO = TLSAPI+"group_open_http_svc/modify_group_member_info?";
+    //解散群组
     public static final String DESTORY_GROUP = TLSAPI+"group_open_http_svc/destroy_group?";
+    //获取用户所加入的群组
     public static final String GET_JOINED_GROUP_LIST = TLSAPI+"group_open_http_svc/get_joined_group_list?";
+    //查询用户在群组中的身份
     public static final String GET_ROLE_IN_GROUP = TLSAPI+"group_open_http_svc/get_role_in_group?";
+    //批量禁言和取消禁言
     public static final String FORBID_SEND_MSG = TLSAPI+"group_open_http_svc/forbid_send_msg?";
+    //获取群组被禁言用户列表
     public static final String GET_GROUP_SHUTTED_UIN = TLSAPI+"group_open_http_svc/get_group_shutted_uin?";
+    //在群组中发送普通消息
     public static final String SEND_GROUP_MSG = TLSAPI+"group_open_http_svc/send_group_msg?";
+    //在群组中发送系统通知
     public static final String SEND_GROUP_SYSTEM_NOTIFICATION = TLSAPI+"group_open_http_svc/send_group_system_notification?";
+    //转让群组
     public static final String CHANGE_GROUP_OWNER = TLSAPI+"group_open_http_svc/change_group_owner?";
+    //导入群基础资料
     public static final String IMPORT_GROUP = TLSAPI+"group_open_http_svc/import_group?";
+    //导入群消息
     public static final String IMPORT_GROUP_MSG = TLSAPI+"group_open_http_svc/import_group_msg?";
+    //导入群成员
     public static final String IMPORT_GROUP_MEMBER = TLSAPI+"group_open_http_svc/import_group_member?";
+    //设置成员未读消息计数
     public static final String SET_UNREAD_MSG_NUM = TLSAPI+"group_open_http_svc/set_unread_msg_num?";
+    //删除指定用户发送的消息
     public static final String DELETE_GROUP_MSG_BY_SENDER = TLSAPI+"group_open_http_svc/delete_group_msg_by_sender?";
+    //搜索群组
     public static final String SEARCH_GROUP = TLSAPI+"group_open_http_svc/search_group?";
+    //拉取群漫游消息
     public static final String GROUP_MSG_GET_SIMPLE = TLSAPI+"group_open_http_svc/group_msg_get_simple?";
 
     /*-------- 5.资料管理接口 ---------*/

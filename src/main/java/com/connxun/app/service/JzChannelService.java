@@ -1,6 +1,6 @@
 package com.connxun.app.service;
 
-import com.connxun.app.entity.Jzchannel;
+import com.connxun.app.entity.JzChannel;
 import com.connxun.app.repositories.JzChannelRepository;
 import com.connxun.app.searchVO.JzChannelSearchVO;
 import com.connxun.common.service.BaseService;
@@ -14,23 +14,23 @@ import java.util.List;
  * Created by anna on 2017-09-18.
  */
 @Service
-public class JzChannelService implements BaseService<Jzchannel,Integer> {
+public class JzChannelService implements BaseService<JzChannel,Integer> {
 
     @Autowired
     private JzChannelRepository jzChannelRepository;
 
     @Override
-    public <S extends Jzchannel> S save(S entity) {
+    public <S extends JzChannel> S save(S entity) {
         return jzChannelRepository.save(entity);
     }
 
     @Override
-    public Jzchannel findOne(Integer primaryKey) {
+    public JzChannel findOne(Integer primaryKey) {
         return jzChannelRepository.findOne(primaryKey);
     }
 
     @Override
-    public List<Jzchannel> findAll() {
+    public List<JzChannel> findAll() {
         return IterableUtils.toList(jzChannelRepository.findAll());
     }
 
@@ -45,7 +45,7 @@ public class JzChannelService implements BaseService<Jzchannel,Integer> {
 
     }
 
-    public List<Jzchannel> getList(JzChannelSearchVO searchVO) {
+    public List<JzChannel> getList(JzChannelSearchVO searchVO) {
         return jzChannelRepository.getList(searchVO);
 
     }

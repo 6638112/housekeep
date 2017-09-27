@@ -4,7 +4,7 @@ import com.connxun.app.dto.JzChannelDTO;
 import com.connxun.app.dto.JzRoomSigDTO;
 import com.connxun.app.entity.JsonEntity;
 import com.connxun.app.entity.JzUser;
-import com.connxun.app.entity.Jzchannel;
+import com.connxun.app.entity.JzChannel;
 import com.connxun.app.searchVO.JzChannelSearchVO;
 import com.connxun.app.service.JzChannelService;
 import com.connxun.app.service.JzUserService;
@@ -49,7 +49,7 @@ public class JzChannelController extends AppBaseController  {
     public JsonEntity getList(JzChannelSearchVO searchVO) {
         searchVO.setChannelStatus(0);
         // TODO: 2017-09-20 添加返回频道主播——关联查询
-        List<Jzchannel> list = jzChannelService.getList(searchVO);
+        List<JzChannel> list = jzChannelService.getList(searchVO);
         if (list.size()>0){
             json = objectToJson(list);
             json.setExt(list.size() + "");
@@ -70,7 +70,7 @@ public class JzChannelController extends AppBaseController  {
     @ResponseBody
     public JsonEntity getChannelById(@ApiParam(required = true, name = "channelId", value = "频道ID")Integer channelId) {
 
-        Jzchannel jzchannel = jzChannelService.findOne(channelId);
+        JzChannel jzchannel = jzChannelService.findOne(channelId);
         JzChannelDTO jzChannelDTO = null;
         if (jzchannel!=null){
             jzChannelDTO=new JzChannelDTO();

@@ -5,13 +5,12 @@ import io.swagger.annotations.ApiParam;
 /**
  * Created by anna on 2017-09-27.
  */
-public class JzGroupSearchVO extends CommonSearchVO {
+public class JzMemberSearchVO extends CommonSearchVO {
 
     @ApiParam("群组ID")
     private String groupNo;
-    @ApiParam("群组名称")
-    private String groupName;
-
+    @ApiParam("成员名称")
+    private String MemberName;
 
     public String getGroupNo() {
         return groupNo;
@@ -21,14 +20,15 @@ public class JzGroupSearchVO extends CommonSearchVO {
         this.groupNo = groupNo;
     }
 
-    public String getGroupName() {
-        return groupName;
-    }
-    public String getGroupNameParam() {
-        return "%"+groupName+"%";
+    public String getMemberName() {
+        return MemberName;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public String getMemberNameParam() {
+        return "%"+MemberName+"%";
+    }
+
+    public void setMemberName(String memberName) {
+        MemberName = memberName;
     }
 }

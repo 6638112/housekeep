@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-22 17:41
@@ -16,6 +18,16 @@ public class TlsGroupEntity {
     @JsonProperty("GroupId")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String groupId;
+
+    //错误编码
+    @JsonProperty("ErrorCode")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String errorCode;
+
+    //错误信息
+    @JsonProperty("ErrorInfo")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String errorInfo;
 
     //群组名称
     @JsonProperty("Name")
@@ -52,10 +64,6 @@ public class TlsGroupEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer createTime;
 
-    //群资料变更次数
-    @JsonProperty("InfoSeq")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer infoSeq;
 
     //群组最后一次信息变更时间
     @JsonProperty("LastInfoTime")
@@ -82,6 +90,94 @@ public class TlsGroupEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String applyJoinOption;
 
+    //群组成员
+    @JsonProperty("MemberList")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<TlsMemberEntity> memberList;
+
+    //群组维度的自定义字段
+    @JsonProperty("AppDefinedData")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<AppDefinedData> appDefinedData;
+
+    //增加群组成员——是否静默加人（选填）0：非静默加人；1：静默加人。不填该字段默认为0。
+    @JsonProperty("Silence")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer silence;
+
+    /*群组维度的自定义字段*/
+    class AppDefinedData{
+        ///key
+        @JsonProperty("Key")
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private String key;
+
+        //value
+        @JsonProperty("Value")
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private String value;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
+
+    public Integer getSilence() {
+        return silence;
+    }
+
+    public void setSilence(Integer silence) {
+        this.silence = silence;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorInfo() {
+        return errorInfo;
+    }
+
+    public void setErrorInfo(String errorInfo) {
+        this.errorInfo = errorInfo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public List<TlsMemberEntity> getMemberList() {
+        return memberList;
+    }
+
+    public void setMemberList(List<TlsMemberEntity> memberList) {
+        this.memberList = memberList;
+    }
+
+    public List<AppDefinedData> getAppDefinedData() {
+        return appDefinedData;
+    }
+
+    public void setAppDefinedData(List<AppDefinedData> appDefinedData) {
+        this.appDefinedData = appDefinedData;
+    }
 
     public void setType(String type) {
         this.type = type;
@@ -144,13 +240,6 @@ public class TlsGroupEntity {
         this.createTime = createTime;
     }
 
-    public Integer getInfoSeq() {
-        return infoSeq;
-    }
-
-    public void setInfoSeq(Integer infoSeq) {
-        this.infoSeq = infoSeq;
-    }
 
     public Integer getLastInfoTime() {
         return lastInfoTime;
@@ -204,7 +293,6 @@ public class TlsGroupEntity {
                 ", faceUrl='" + faceUrl + '\'' +
                 ", owner_Account='" + owner_Account + '\'' +
                 ", createTime=" + createTime +
-                ", infoSeq=" + infoSeq +
                 ", lastInfoTime=" + lastInfoTime +
                 ", lastMsgTime=" + lastMsgTime +
                 ", nextMsgSeq=" + nextMsgSeq +

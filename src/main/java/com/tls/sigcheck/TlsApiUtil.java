@@ -70,9 +70,6 @@ public class TlsApiUtil {
         TlsListEntity tlsListEntity=new TlsListEntity();
         tlsListEntity.setAccounts(accounts);
 
-
-
-
         String result= HttpUtil.getJsonFromUrlPost(D_MUL_ACCOUNT +
                 "identifier=" + identifier +"&usersig=" + usersig +
                 "&sdkappid="+SDKAPPID+"&random="+ StringUtil.buildRandom(6)+"&contenttype=json", JsonUtil.toStr(tlsListEntity));
@@ -99,8 +96,8 @@ public class TlsApiUtil {
 
     /*-------- 2.群组管理 --------*/
     /**
-     * 获取APP中的所有群组
-     * @param identifier 用户名
+     * 获取APP中的所有群组的ID
+     * @param identifier 用户ID
      * @param usersig 用户加密sig
      * @param tlsGetGroupEntity 群组实体
      */
@@ -135,19 +132,38 @@ public class TlsApiUtil {
     }
 
     /**
+     * 获取群组详细资料
+     * @param identifier 用户名
+     * @param usersig 用户加密sig
+     * @param groups 群组list
+     */
+    public static TlsResultEntity getGroupInfo(String identifier, String usersig, List<String> groups){
+
+        TlsListEntity tlsListEntity=new TlsListEntity();
+        tlsListEntity.setGroupIdList(groups);
+
+        String result= HttpUtil.getJsonFromUrlPost(GET_GROUP_INFO +
+                "identifier=" + identifier +"&usersig=" + usersig +
+                "&sdkappid="+SDKAPPID+"&random="+ StringUtil.buildRandom(6)+"&contenttype=json", JsonUtil.toStr(tlsListEntity));
+
+        return (TlsResultEntity) JsonUtil.toObject(TlsResultEntity.class,result);
+    }
+
+
+    /**
      * 增加群组成员
      * @param identifier 用户名
      * @param usersig 用户加密sig
-     * @param tlsGroupAddMemberEntity 群组实体
+     * @param tlsGroupEntity 群组实体
      */
-    public static TlsResultEntity addGroupMember(String identifier, String usersig, TlsGroupAddMemberEntity tlsGroupAddMemberEntity){
+    public static TlsResultEntity addGroupMember(String identifier, String usersig, TlsGroupEntity tlsGroupEntity){
 
-        if (tlsGroupAddMemberEntity==null){
-            tlsGroupAddMemberEntity=new TlsGroupAddMemberEntity();
+        if (tlsGroupEntity==null){
+            tlsGroupEntity=new TlsGroupEntity();
         }
         String result= HttpUtil.getJsonFromUrlPost(ADD_GROUP_MEMBER +
                 "identifier=" + identifier +"&usersig=" + usersig +
-                "&sdkappid="+SDKAPPID+"&random="+ StringUtil.buildRandom(6)+"&contenttype=json", JsonUtil.toStr(tlsGroupAddMemberEntity));
+                "&sdkappid="+SDKAPPID+"&random="+ StringUtil.buildRandom(6)+"&contenttype=json", JsonUtil.toStr(tlsGroupEntity));
 
         return (TlsResultEntity) JsonUtil.toObject(TlsResultEntity.class,result);
     }
@@ -169,12 +185,11 @@ public class TlsApiUtil {
                 "}";
 
         /*这测试使用固定管理员：admin，固定sig：。。。同理可传入参数*/
-
-        /*测试账号导入*/
+        /*账号导入*/
         TlsAccountEntity tlsAccountEntity=new TlsAccountEntity();
         tlsAccountEntity.setIdentifier("test1");
 
-//        /*测试账号批量导入*/
+//        /*账号批量导入*/
 //        List<String> list=new ArrayList<>();
 //        list.add("test12");
 //        list.add("test123");
@@ -183,6 +198,8 @@ public class TlsApiUtil {
 //                tlsAccountEntity);
 //        TlsResultEntity tlsApiResultEntity=accountMulImport("admin","eJxlj0FPgzAAhe-8iqZXjWvBQjTZYVNnlk4DE0V3IQ0tpC6UAh10GP*7iksk8V2-7*XlfTgAABhvni5YllUHZVJz1AKCawARPP*DWkueMpN6Df8HhdWyESnLjWhGiAkhLkJTR3KhjMzlyWC8lGqCW75Px43f-uV3GV*5BE8VWYzw4S66Wd8HZh83NNZ1GVnbnSFKwnzVUkR9OrNJ1*822fsstMktXchlXFe75-K1WHeDXVGvL4YXb2iV3ZJtpWiUtMtDUIeLR-bWz*eTSSNLcTqEfOQHgT*91ImmlZUaBRdhgl0P-QQ6n84Xvq9emg__",
 //                list );
+
+        /*账号登录状态失效*/
 //        TlsResultEntity tlsApiResultEntity=accountKick("admin",(TlsSigUtil.genSig("admin")).getSig(),tlsAccountEntity );
 
         /*-------- 2.群组管理json --------*/
@@ -193,28 +210,39 @@ public class TlsApiUtil {
                 "}";
         // GroupType：拉取哪种群组形态，不填为拉取所有
 
-        /*测试账号导入*/
+        /*获取群组列表*/
 //        TlsGetGroupEntity tlsGroupEntity=new TlsGetGroupEntity();
 //        tlsGroupEntity.setGroupType("AVChatRoom");
 //        TlsResultEntity tlsApiResultEntity=groupList("admin",(TlsSigUtil.genSig("admin")).getSig(),tlsGroupEntity );
 
+        /*创建群组-基础形式*/
 //        TlsGroupEntity tlsGroupEntity2=new TlsGroupEntity();
 //        tlsGroupEntity2.setType("AVChatRoom");
 //        tlsGroupEntity2.setName("g2017");
 //        TlsResultEntity tlsApiResultEntity=createGroup("admin",(TlsSigUtil.genSig("admin")).getSig(),tlsGroupEntity2 );
 
-        TlsGroupAddMemberEntity tlsGroupEntity2=new TlsGroupAddMemberEntity();
-        tlsGroupEntity2.setGroupId("@TGS#23IEBB5E4");
-        List<TlsGroupAddMemberEntity.Member_Account> list=new ArrayList<TlsGroupAddMemberEntity.Member_Account>();
-        TlsGroupAddMemberEntity.Member_Account member_account=new TlsGroupAddMemberEntity.Member_Account();
-        member_account.setMember_Account("test12");
-        list.add(member_account);
-        member_account=new TlsGroupAddMemberEntity.Member_Account();
-        member_account.setMember_Account("test123");
-        list.add(member_account);
-        tlsGroupEntity2.setMemberList(list);
+        /*获取群组详细资料*/
+        List<String> list=new ArrayList<>();
+        list.add("@TGS#aFRASB5EX");
+        list.add("@TGS#aUSE3E5EO");
+        TlsResultEntity tlsApiResultEntity=getGroupInfo("admin",(TlsSigUtil.genSig("admin")).getSig(),list );
 
-        TlsResultEntity tlsApiResultEntity=addGroupMember("admin",(TlsSigUtil.genSig("admin")).getSig(),tlsGroupEntity2 );
+
+//        /*添加群组成员*/
+//        TlsGroupEntity tlsGroupEntity2=new TlsGroupEntity();
+//        tlsGroupEntity2.setGroupId("@TGS#23IEBB5E4");
+//
+//        List<TlsMemberEntity> list=new ArrayList<TlsMemberEntity>();
+//        TlsMemberEntity member_account=new TlsMemberEntity();
+//        member_account.setMember_Account("test12");
+//        list.add(member_account);
+//
+//        member_account=new TlsMemberEntity();
+//        member_account.setMember_Account("test123");
+//        list.add(member_account);
+//        tlsGroupEntity2.setMemberList(list);
+//
+//        TlsResultEntity tlsApiResultEntity=addGroupMember("admin",(TlsSigUtil.genSig("admin")).getSig(),tlsGroupEntity2 );
 
 
 

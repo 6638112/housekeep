@@ -1,6 +1,6 @@
 package com.connxun.app.repositories;
 
-import com.connxun.app.entity.Jzchannel;
+import com.connxun.app.entity.JzChannel;
 import com.connxun.app.searchVO.JzChannelSearchVO;
 
 import java.util.List;
@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface JzChannelRepositoryCustom {
 
-    List<Jzchannel> getList(JzChannelSearchVO searchVO);
+    List<JzChannel> getList(JzChannelSearchVO searchVO);
 }

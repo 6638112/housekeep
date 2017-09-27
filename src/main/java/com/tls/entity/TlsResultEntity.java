@@ -32,22 +32,22 @@ public class TlsResultEntity {
     List<String> failAccounts;
 
     /*----------------- 群组管理result字段 -----------------*/
-    // 群组管理——获取APP当前的群组总数
+    // 群组管理———获取群组ID 获取APP当前的群组总数
     @JsonProperty("TotalCount")
     private String totalCount;
 
-    // 群组管理——群组LIST
+    // 群组管理——获取群组ID LIST
     @JsonProperty("GroupIdList")
     private List<TlsGroupEntity> groupIdList;
 
-    // 群组管理——分页拉取的标志
+    // 群组管理———获取群组ID 分页拉取的标志
     @JsonProperty("Next")
     private String next;
 
-    // 群组管理——增加群组成员
-    @JsonProperty("MemberList")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<TlsGroupAddMemberEntity.Member_Account> memberList;
+    // 群组管理——获取群组详细信息list
+    @JsonProperty("GroupInfo")
+    private List<TlsGroupEntity> groupInfo;
+
 
     /*----------------- end -----------------*/
 
@@ -108,25 +108,13 @@ public class TlsResultEntity {
         this.groupIdList = groupIdList;
     }
 
-    public List<TlsGroupAddMemberEntity.Member_Account> getMemberList() {
-        return memberList;
+    public List<TlsGroupEntity> getGroupInfo() {
+        return groupInfo;
     }
 
-    public void setMemberList(List<TlsGroupAddMemberEntity.Member_Account> memberList) {
-        this.memberList = memberList;
+    public void setGroupInfo(List<TlsGroupEntity> groupInfo) {
+        this.groupInfo = groupInfo;
     }
 
-    @Override
-    public String toString() {
-        return "TlsResultEntity{" +
-                "actionStatus='" + actionStatus + '\'' +
-                ", errorCode=" + errorCode +
-                ", errorInfo='" + errorInfo + '\'' +
-                ", failAccounts=" + failAccounts +
-                ", totalCount='" + totalCount + '\'' +
-                ", groupIdList=" + groupIdList +
-                ", next='" + next + '\'' +
-                ", memberList=" + memberList +
-                '}';
-    }
+
 }
