@@ -8,6 +8,7 @@
 out
 gen
 /target/
+*.class
 /out
 /checkouts
 /.lein-*
@@ -21,3 +22,4 @@ logs
 /log
 /tmp
 hotspot.log
+src/test/

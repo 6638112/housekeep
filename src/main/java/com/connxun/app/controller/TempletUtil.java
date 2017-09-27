@@ -1,7 +1,7 @@
 package com.connxun.app.controller;
 
 
-import com.connxun.app.entity.LwUser;
+import com.connxun.app.entity.JzUser;
 import com.connxun.app.entity.LwUserMsg;
 import com.connxun.util.date.DateUtil;
 import com.connxun.util.jpush.PushService;
@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 /**
- * Created by zosoft-java on 2017/7/28.
+ * @Author：luoxiaosheng
+ * @Date：2017-09-26 10:43
+ * @Comments：消息推送
  */
 @Component
 @RestController
@@ -34,7 +36,7 @@ public class TempletUtil {
     public static void addMsg(String alias, String msg, String title, Integer iconNo, Integer type, Integer courseNo, Integer voucherNo) {
         if (StringUtil.isInteger(alias)) {
 //            LwUser lwUser = lwUserService.findOne(Integer.parseInt(alias));
-            LwUser lwUser = null;
+            JzUser lwUser = null;
             if (lwUser != null) {
                 LwUserMsg lwUserMsg = new LwUserMsg();
                 lwUserMsg.setUserNo(Integer.parseInt(alias));

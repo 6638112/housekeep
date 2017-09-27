@@ -3,14 +3,16 @@ package com.connxun.app.controller;
 
 import com.connxun.app.entity.Code;
 import com.connxun.app.entity.JsonEntity;
-import com.connxun.app.entity.LwUser;
-import com.connxun.app.searchVO.LwUserSearchVO;
-import com.connxun.app.service.LwUserService;
+import com.connxun.app.entity.JzUser;
+import com.connxun.app.searchVO.JzUserSearchVO;
+import com.connxun.app.service.JzUserService;
 import com.connxun.util.code.SerialNumUtil;
 import com.connxun.util.config.PubConfig;
 import com.connxun.util.date.DateUtil;
 import com.connxun.util.redis.RedisUtil;
 import com.connxun.util.string.StringUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,17 +33,17 @@ import java.util.List;
  * Created by Mac on 2017/6/11.
  */
 @Controller
-@RequestMapping("/lw/user")
-public class LwUserController extends AppBaseController {
+@RequestMapping("/jz/user")
+public class JzUserController extends AppBaseController {
 
     //0正常 1删除  2 禁用 3 审核中
     @Autowired
-    private LwUserService lwUserService;
+    private JzUserService jzUserService;
     private final PubConfig pubConfig;
 //    @Autowired
 //    private LwInvitationService lwInvitationService;
 //    @Autowired
-//    private LwUserCourseService lwUserCourseService;
+//    private JzUserCourseService JzUserCourseService;
 //    @Autowired
 //    private LwCourseService lwCourseService;
 //    @Autowired
@@ -50,7 +52,7 @@ public class LwUserController extends AppBaseController {
 //    private LwTeacherService lwTeacherService;
 
     @Autowired
-    public LwUserController(PubConfig pubConfig) {
+    public JzUserController(PubConfig pubConfig) {
         this.pubConfig = pubConfig;
     }
 
@@ -98,18 +100,21 @@ public class LwUserController extends AppBaseController {
     @RequestMapping("/out")
     @ResponseBody
     public JsonEntity out(HttpServletRequest request, HttpServletResponse response, String userNo) {
-        RedisUtil.set(userNo, "000");
+//        RedisUtil.set(userNo, "000");
+
+        RedisUtil.del(userNo);
 
         return booleanToJson(true);
 
     }
 
     //  获取用户自己的信息
-    @RequestMapping("/info")
+    @ApiOperation(value="用户获取自己的信息")
+    @RequestMapping(value="/info",method = RequestMethod.POST)
     @ResponseBody
-    public JsonEntity info(String userNo) {
+    public JsonEntity info( @ApiParam(required = true, name = "userNo", value = "用户ID")String userNo) {
 
-        LwUser user = lwUserService.findOne(Integer.parseInt(userNo));
+        JzUser user = jzUserService.findOne(Integer.parseInt(userNo));
         if (user != null) {
             user.setPassword(null);
         }
@@ -160,7 +165,7 @@ public class LwUserController extends AppBaseController {
     @ResponseBody
     @RequestMapping("/friendInfo")
     public JsonEntity friendInfo(int id) {
-        LwUser user = lwUserService.findOne(id);
+        JzUser user = jzUserService.findOne(id);
         if (user != null) {
             user.setPassword(null);
             user.setToken(null);
@@ -172,8 +177,8 @@ public class LwUserController extends AppBaseController {
     //用户搜索
     @RequestMapping(value = "search")
     @ResponseBody
-    public JsonEntity search(LwUserSearchVO search) {
-        List<LwUser> liveUsers = lwUserService.search(search);
+    public JsonEntity search(JzUserSearchVO search) {
+        List<JzUser> liveUsers = jzUserService.search(search);
         return objectToJson(liveUsers);
 
     }
@@ -181,8 +186,8 @@ public class LwUserController extends AppBaseController {
     //    修改基础信息
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public JsonEntity updateDeclaration(LwUserSearchVO vo, Integer state) {
-        LwUser sysUser = lwUserService.findOne(vo.getUserNo());
+    public JsonEntity updateDeclaration(JzUserSearchVO vo, Integer state) {
+        JzUser sysUser = jzUserService.findOne(vo.getUserNo());
 
         if (sysUser != null) {
 
@@ -202,7 +207,7 @@ public class LwUserController extends AppBaseController {
             }
 
 
-            sysUser = lwUserService.save(sysUser);
+            sysUser = jzUserService.save(sysUser);
             if (sysUser != null) {
                 sysUser.setPassword(null);
                 json = objectToJson(sysUser);
@@ -222,8 +227,8 @@ public class LwUserController extends AppBaseController {
     //    修改基础信息
     @ResponseBody
     @RequestMapping(value = "updateInfo", method = RequestMethod.POST)
-    public JsonEntity updateInfo(LwUserSearchVO vo) {
-        LwUser sysUser = lwUserService.findOne(vo.getUserNo());
+    public JsonEntity updateInfo(JzUserSearchVO vo) {
+        JzUser sysUser = jzUserService.findOne(vo.getUserNo());
 
         if (sysUser != null) {
 
@@ -242,7 +247,7 @@ public class LwUserController extends AppBaseController {
                 sysUser.setIcon(vo.getIcon());
             }
 
-            sysUser = lwUserService.save(sysUser);
+            sysUser = jzUserService.save(sysUser);
             if (sysUser != null) {
                 sysUser.setPassword(null);
                 json = objectToJson(sysUser);
@@ -262,8 +267,8 @@ public class LwUserController extends AppBaseController {
     //修改手机号
     @ResponseBody
     @RequestMapping(value = "updatePhone", method = RequestMethod.POST)
-    public JsonEntity updatePhone(LwUserSearchVO vo, String captch) {
-        LwUser sysUser = lwUserService.findOne(vo.getUserNo());
+    public JsonEntity updatePhone(JzUserSearchVO vo, String captch) {
+        JzUser sysUser = jzUserService.findOne(vo.getUserNo());
 
         if (sysUser != null) {
             String sysCaptch = RedisUtil.get(vo.getPhone() + "1");
@@ -272,7 +277,7 @@ public class LwUserController extends AppBaseController {
                 json = ErrorCode(Code.CAPTCHFAIL);
             } else {
                 sysUser.setPhone(vo.getPhone());
-                sysUser = lwUserService.save(sysUser);
+                sysUser = jzUserService.save(sysUser);
                 if (sysUser != null) {
                     sysUser.setPassword(null);
                     json = objectToJson(sysUser);
@@ -295,14 +300,14 @@ public class LwUserController extends AppBaseController {
     @ResponseBody
     @RequestMapping(value = "updatePassword", method = RequestMethod.POST)
     public JsonEntity updatePassword(String userNo, String password, String newPwd) {
-        LwUser sysUser = lwUserService.findOne(Integer.parseInt(userNo));
+        JzUser sysUser = jzUserService.findOne(Integer.parseInt(userNo));
 
         System.out.println(sysUser.getPassword());
         System.out.println(sysUser.getPassword().equals(password));
         if (sysUser != null && sysUser.getPassword().equals(password)) {
             sysUser.setPassword(newPwd);
 
-            sysUser = lwUserService.save(sysUser);
+            sysUser = jzUserService.save(sysUser);
             if (sysUser != null) {
                 json = booleanToJson(true);
 
@@ -321,23 +326,23 @@ public class LwUserController extends AppBaseController {
 //
 //    @ResponseBody
 //    @RequestMapping(value = "/invitation", method = RequestMethod.POST)
-//    public JsonEntity invitationGetList(LwUserSearchVO lwUserSearchVO) {
+//    public JsonEntity invitationGetList(JzUserSearchVO JzUserSearchVO) {
 //        Map<String, Object> map = new HashMap<String, Object>();
 //
 //
-//        LwUser lwUser = lwUserService.findOne(lwUserSearchVO.getUserNo());
-//        Integer inviteCode = lwUser.getInviteCode();
+//        JzUser JzUser = JzUserService.findOne(JzUserSearchVO.getUserNo());
+//        Integer inviteCode = JzUser.getInviteCode();
 //        if (inviteCode == null || inviteCode == 0) {
-//            lwUser.setInviteCode(lwUser.getId() + 10000);
-//            lwUser = lwUserService.save(lwUser);
-//            if (lwUser != null) {
-//                map.put("inviteCode", lwUser.getInviteCode());
+//            JzUser.setInviteCode(JzUser.getId() + 10000);
+//            JzUser = JzUserService.save(JzUser);
+//            if (JzUser != null) {
+//                map.put("inviteCode", JzUser.getInviteCode());
 //                map.put("invitation", null);
 //                map.put("userList", null);
 //
 //            }
 //        } else {
-//            map.put("inviteCode", lwUser.getInviteCode());
+//            map.put("inviteCode", JzUser.getInviteCode());
 //            LwInvitationSearchVO lwInvitationSearchVO = new LwInvitationSearchVO();
 //            lwInvitationSearchVO.setState(0);
 ////         获取最新的规则id
@@ -346,12 +351,12 @@ public class LwUserController extends AppBaseController {
 //                LwInvitation lwInvitation = lwInvitations.get(0);
 //                Integer userNum = lwInvitation.getUserNum();
 //                map.put("invitation", lwInvitations.get(0));
-//                lwUserSearchVO.setGuide(lwUser.getId());
-//                lwUserSearchVO.setInvitationNo(lwInvitations.get(0).getId());
+//                JzUserSearchVO.setGuide(JzUser.getId());
+//                JzUserSearchVO.setInvitationNo(lwInvitations.get(0).getId());
 ////                查询邀请人数
-//                lwUserSearchVO.setPage(0);
-//                lwUserSearchVO.setLength(9999);
-//                List<LwUser> list = lwUserService.getInvitationList(lwUserSearchVO);
+//                JzUserSearchVO.setPage(0);
+//                JzUserSearchVO.setLength(9999);
+//                List<JzUser> list = JzUserService.getInvitationList(JzUserSearchVO);
 //                int userSize = list.size();
 //                if (userSize > 0) {
 //                    map.put("userList", list);
@@ -359,22 +364,22 @@ public class LwUserController extends AppBaseController {
 //                    lwInvitation.setNoNum(userNum > userSize ? userNum - userSize : 0);
 ////                    推送消息
 //                    if (userSize >= userNum) {
-//                        Integer userNo = lwUserSearchVO.getUserNo();
+//                        Integer userNo = JzUserSearchVO.getUserNo();
 //                        Integer courseNo = lwInvitation.getCourseNo();
 //                        LwCourse lwCourse = lwCourseService.findOne(courseNo);
 ////                        判断有无此课程   曾送课程
-//                        Integer size = lwUserCourseService.isCourse(courseNo, userNo);
+//                        Integer size = JzUserCourseService.isCourse(courseNo, userNo);
 //                        if (size > 0) {
 //                        } else {
 ////                           曾送课程
-//                            LwUserCourse lwUserCourse = new LwUserCourse();
-//                            lwUserCourse.setReview(0);
-//                            lwUserCourse.setUserNo(userNo);
-//                            lwUserCourse.setCourseNo(courseNo);
-//                            lwUserCourse.setType(0);
-//                            lwUserCourse.setFinalAmount(lwCourse.getFinalAmount());
-//                            lwUserCourse.setCourseType(lwCourse.getCourseType());
-//                            lwUserCourseService.save(lwUserCourse);
+//                            JzUserCourse JzUserCourse = new JzUserCourse();
+//                            JzUserCourse.setReview(0);
+//                            JzUserCourse.setUserNo(userNo);
+//                            JzUserCourse.setCourseNo(courseNo);
+//                            JzUserCourse.setType(0);
+//                            JzUserCourse.setFinalAmount(lwCourse.getFinalAmount());
+//                            JzUserCourse.setCourseType(lwCourse.getCourseType());
+//                            JzUserCourseService.save(JzUserCourse);
 //                            // 发送推送消息
 //                            try {
 //                                TempletUtil.courseOpen(userNo + "", lwCourse.getName(), lwCourse.getId(), lwCourse.getViewEndDate());
@@ -408,12 +413,12 @@ public class LwUserController extends AppBaseController {
 
     @ResponseBody
     @RequestMapping(value = "/phoneCode", method = RequestMethod.POST)
-    public JsonEntity loginCode(LwUserSearchVO vo) {
+    public JsonEntity loginCode(JzUserSearchVO vo) {
 
 
-        LwUser lwUser = lwUserService.findOne(vo.getUserNo());
+        JzUser JzUser = jzUserService.findOne(vo.getUserNo());
         json = booleanToJson(false);
-        if (lwUser != null) {
+        if (JzUser != null) {
             String ret = RedisUtil.get(vo.getCode());
             if (StringUtil.isNotNullOrEmpty(ret)) {
                 if (ret.equals(vo.getCodeUUID())) {
