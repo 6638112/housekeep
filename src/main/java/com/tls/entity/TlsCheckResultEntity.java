@@ -1,11 +1,11 @@
-package com.tls.sigcheck;
+package com.tls.entity;
 
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-20 18:30
- * @Comments：tls检查结果实体类
+ * @Comments：tls生成、检查实体类
  */
-public class CheckResultEntity {
+public class TlsCheckResultEntity {
 	//验证结果
 	private boolean isOk = false;
 	//加密Sig
