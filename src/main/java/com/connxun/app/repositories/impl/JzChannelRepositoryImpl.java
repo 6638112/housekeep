@@ -17,8 +17,6 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.connxun.util.qcloud.LiveGetInfo.LiveChannelGetChannelList;
-
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-18 14:20
@@ -42,7 +40,7 @@ public class JzChannelRepositoryImpl  extends JdbcDaoSupport implements JzChanne
 
         sql += createSearchSql(searchVO);//调用创建查询sql方法
 
-        sql += " ORDER BY lv.create_time DESC, lv.channel_status ASC ";
+        sql += " ORDER BY lv.createTime DESC, lv.channelStatus ASC ";
 
 
 
@@ -68,29 +66,18 @@ public class JzChannelRepositoryImpl  extends JdbcDaoSupport implements JzChanne
     private String createSearchSql(JzChannelSearchVO searchVO) {
         String sql = "";
         if (StringUtil.isNotNullOrEmpty(searchVO.getChannelNo())) { //判断是否为null或者""
-            sql += " and lv.channel_id = :channelNo ";
+            sql += " and lv.channelId = :channelNo ";
         }
         if (StringUtil.isNotNullOrEmpty(searchVO.getChannelName())) { //判断是否为null或者""
-            sql += " and lv.channel_name like :channelNameParam ";
+            sql += " and lv.channelName like :channelNameParam ";
         }
         if (searchVO.getChannelStatus() != null) { //判断是否为null或者""
-            sql += " and lv.channel_status like :channelStatus ";
+            sql += " and lv.channelStatus like :channelStatus ";
         }
 
         return sql;
 
     }
 
-    /**
-     * 同步云端数据到本地数据库
-     *
-     * @return
-     */
-    private String synQCloudChannel() {
-        String jsonResult=LiveChannelGetChannelList();
-
-        return "";
-
-    }
 
 }

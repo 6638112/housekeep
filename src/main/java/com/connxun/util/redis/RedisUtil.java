@@ -113,6 +113,16 @@ public class RedisUtil {
         });
 	}
 
+    /**
+     * 判断是否存在
+     *
+     * @param key
+     * @return
+     */
+    public static boolean contain(final String key) {
+        return get(key) != null;
+    }
+
 	///清空所有
 	public static void flushDb() {
 		redisTemplate.execute((RedisCallback<Object>) connection -> {

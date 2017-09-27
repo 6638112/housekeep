@@ -133,8 +133,8 @@ public class LiveAddressCreate {
 
     public static void main(String[] args) {
 
-//        System.out.println(getLivePlayAddress("2914_test201703",0,0));
-        System.out.println(createLiveAddress("","test201704"));
+        System.out.println(getLivePlayAddress("2914_test201703",0,0));
+//        System.out.println(createLiveAddress("","test201704"));
 
     }
 

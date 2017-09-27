@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Author：luoxiaosheng
@@ -106,9 +105,6 @@ public class LwVoucher  implements Serializable {
     //课程名称
     @Transient
     private String courseName;
-    //课程列表
-    @Transient
-    private List<LwCourse> lwCourseList;
     /**
      * 新增时执行的函数
      */
@@ -158,14 +154,6 @@ public class LwVoucher  implements Serializable {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public List<LwCourse> getLwCourseList() {
-        return lwCourseList;
-    }
-
-    public void setLwCourseList(List<LwCourse> lwCourseList) {
-        this.lwCourseList = lwCourseList;
     }
 
     public String getReceive() {
@@ -360,37 +348,4 @@ public class LwVoucher  implements Serializable {
         this.userVoucherId = userVoucherId;
     }
 
-
-    @Override
-    public String toString() {
-        return "LwVoucher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", prefix='" + prefix + '\'' +
-                ", denomination=" + denomination +
-                ", count=" + count +
-                ", number=" + number +
-                ", beginDate=" + beginDate +
-                ", stopDate=" + stopDate +
-                ", type=" + type +
-                ", applyBeginDate=" + applyBeginDate +
-                ", applyStopDate=" + applyStopDate +
-                ", state=" + state +
-                ", userVoucherState=" + userVoucherState +
-                ", userVoucherId=" + userVoucherId +
-                ", actPhoto='" + actPhoto + '\'' +
-                ", sharePhoto='" + sharePhoto + '\'' +
-                ", createUser=" + createUser +
-                ", createDate=" + createDate +
-                ", updateUser=" + updateUser +
-                ", updateDate=" + updateDate +
-                ", remarks='" + remarks + '\'' +
-                ", del_flag='" + del_flag + '\'' +
-                ", wholesite=" + wholesite +
-                ", receive='" + receive + '\'' +
-                ", used='" + used + '\'' +
-                ", courseName='" + courseName + '\'' +
-                ", lwCourseList=" + lwCourseList +
-                '}';
-    }
 }

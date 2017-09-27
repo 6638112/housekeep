@@ -2,6 +2,8 @@ package com.connxun.util.qcloud;
 
 import com.connxun.util.properties.OpeProperties;
 
+import java.util.Properties;
+
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-15 16:10
@@ -20,7 +22,6 @@ public class LiveConstantAPI {
 //    //回调URL
 //    public static final String BACKURL   = "http://wx.connxun.com/wx/callback";
 
-
     //bizid
     public static final String BIZID;
     //appid
@@ -32,13 +33,15 @@ public class LiveConstantAPI {
     //回调URL
     public static final String BACKURL;
 
+    private static Properties pps;
     /*静态代码块*/
     static{
-        BIZID   = OpeProperties.GetValueByKey("","live.bizid").trim();
-        APPID  = OpeProperties.GetValueByKey("","live.appid").trim();
-        APIKEY = OpeProperties.GetValueByKey("","live.apikey").trim();
-        PUSHKEY   = OpeProperties.GetValueByKey("","live.pushkey").trim();
-        BACKURL   = OpeProperties.GetValueByKey("","live.backurl").trim();
+        OpeProperties opeProperties=new OpeProperties();
+        BIZID   = opeProperties.GetValueByKey("","live.bizid").trim();
+        APPID  = opeProperties.GetValueByKey("","live.appid").trim();
+        APIKEY = opeProperties.GetValueByKey("","live.apikey").trim();
+        PUSHKEY   = opeProperties.GetValueByKey("","live.pushkey").trim();
+        BACKURL   = opeProperties.GetValueByKey("","live.backurl").trim();
     }
 
     //推流地址前缀

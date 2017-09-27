@@ -14,7 +14,6 @@ public class Output {
     //列表
     private List<Jzchannel> channel_list;
 
-
     public int getAll_count() {
         return all_count;
     }

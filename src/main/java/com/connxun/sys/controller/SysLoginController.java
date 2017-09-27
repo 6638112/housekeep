@@ -139,7 +139,7 @@ public class SysLoginController {
         if (userSession != null) {
             mv.setViewName("/index");
         } else {
-            mv.setViewName("redirect:/portal/login.do");
+            mv.setViewName("redirect:/portal/login");
         }
         return mv;
     }

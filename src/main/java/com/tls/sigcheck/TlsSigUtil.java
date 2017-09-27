@@ -1,11 +1,15 @@
 package com.tls.sigcheck;
 
 import com.connxun.util.properties.OpeProperties;
+import com.tls.entity.TlsCheckResultEntity;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+
+import static com.tls.sigcheck.TlsConstantApi.SDKAPPID;
 
 /**
  * @Author：luoxiaosheng
@@ -26,14 +30,15 @@ public class TlsSigUtil {
 
 	/*静态初始化*/
 	static {
-        priKeyFile=new File(OpeProperties.GetValueByKey("","tls.private_key").trim());
+        OpeProperties opeProperties=new OpeProperties();
+        priKeyFile=new File(opeProperties.GetValueByKey("","tls.private_key").trim());
 
         pubKeyFile=new File(OpeProperties.GetValueByKey("","tls.public_key").trim());;
 
         sigcheck = new tls_sigcheck();
 
 //        sdkAppid=OpeProperties.GetValueByKey("","tls.sdkappid").trim();
-        sdkAppid=TlsConstantAPI.SDKAPPID;
+        sdkAppid=SDKAPPID;
 
         String os = OpeProperties.GetValueByKey("","os.name").trim();
 
@@ -68,17 +73,23 @@ public class TlsSigUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static CheckResultEntity genSig(String identifier ) throws Exception {
+	public static TlsCheckResultEntity genSig(String identifier ) {
 
-        CheckResultEntity resultEntity = new CheckResultEntity();
+        TlsCheckResultEntity resultEntity = new TlsCheckResultEntity();
         StringBuilder strBuilder = new StringBuilder();
         String s = "";
 
-        BufferedReader br = new BufferedReader(new FileReader(priKeyFile));
-        while ((s = br.readLine()) != null) {
-            strBuilder.append(s + '\n');
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(priKeyFile));
+            while ((s = br.readLine()) != null) {
+                strBuilder.append(s + '\n');
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        br.close();
+
         String priKey = strBuilder.toString();
         int ret = sigcheck.tls_gen_signature_ex2(sdkAppid, identifier, priKey);
         resultEntity.setRet(ret);
@@ -104,16 +115,22 @@ public class TlsSigUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static CheckResultEntity checkSig(String identifier, String sig) throws Exception {
-        CheckResultEntity resultEntity = new CheckResultEntity();
+	public static TlsCheckResultEntity checkSig(String identifier, String sig) {
+        TlsCheckResultEntity resultEntity = new TlsCheckResultEntity();
         StringBuilder strBuilder = new StringBuilder();
         String s = "";
-        BufferedReader br = new BufferedReader(new FileReader(pubKeyFile));
-        strBuilder.setLength(0);
-        while ((s = br.readLine()) != null) {
-            strBuilder.append(s + '\n');
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(pubKeyFile));
+            strBuilder.setLength(0);
+            while ((s = br.readLine()) != null) {
+                strBuilder.append(s + '\n');
+            }
+            br.close();
+        }catch (IOException e) {
+            e.printStackTrace();
         }
-        br.close();
+
         String pubKey = strBuilder.toString();
         int ret = sigcheck.tls_check_signature_ex2(sig, pubKey, sdkAppid, identifier);
         if (0 != ret) {
@@ -135,12 +152,11 @@ public class TlsSigUtil {
 	public static void main(String[] args) throws Exception {
 		try {
 //			String sig = JsonKit.toJson(new TlsSigUtil().genSin("wyl123456"));
-			CheckResultEntity resultEntity= genSig("wyl123456");
+            TlsCheckResultEntity resultEntity= genSig("test0925");
 //			System.out.println(resultEntity.getSig());
-			resultEntity = checkSig("wyl123456", resultEntity.getSig());
+			resultEntity = checkSig("test0925", resultEntity.getSig());
 //			System.out.println(JsonKit.toJson(resultEntity));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,9 +1,10 @@
+
 <%@ include file="../../common/taglib.jsp" %>
 <%@ page pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>${webTitle }-频道管理</title>
+    <title>${webTitle }-主播管理</title>
     <%@ include file="../../common/header.jsp" %>
 </head>
 
@@ -36,9 +37,9 @@
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <div class="form-group">
-                                                    <label class="control-label col-xs-6 col-lg-5" style="line-height: 15px">频道编号：</label>
+                                                    <label class="control-label col-xs-6 col-lg-5" style="line-height: 15px">主播名称：</label>
                                                     <div class="col-xs-6 col-lg-7">
-                                                        <input type="text" id="channelNoSearch"
+                                                        <input type="text" id="playerNameSearch"
                                                                class="col-xs-12 col-sm-12 col-lg-10"
                                                                value="" title=""/>
                                                     </div>
@@ -88,10 +89,11 @@
                                        class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th style="background-color: #E5E5E5">频道ID</th>
+                                        <th style="background-color: #E5E5E5">主播姓名</th>
                                         <th style="background-color: #E5E5E5">频道名称</th>
-                                        <th style="background-color: #E5E5E5">频道状态</th>
-                                        <th style="background-color: #E5E5E5">创建时间</th>
+                                        <th style="background-color: #E5E5E5">群组名称</th>
+                                        <th style="background-color: #E5E5E5">过期时间</th>
+                                        <th style="background-color: #E5E5E5">主播状态</th>
                                         <th style="background-color: #E5E5E5">操作</th>
                                     </tr>
                                     </thead>
@@ -142,7 +144,7 @@
         var userParam = {
             getQueryCondition: function (data) {
                 var param = {};
-                param.channelNo = $("#channelNoSearch").val();
+                param.playerName = $("#playerNameSearch").val();
                 param.channelName = $("#channelNameSearchSearch").val();
                 param.page = data.start;
                 param.length = data.length;
@@ -166,7 +168,7 @@
             ajax: function (data, callback) {//ajax配置为function,手动调用异步查询
                 $.ajax({
                     type: "GET",
-                    url: '${dynamicServer}/cms/channel/getList',//请求数据的参数
+                    url: '${dynamicServer}/cms/player/getList',//请求数据的参数
                     data: userParam.getQueryCondition(data),
                     cache: false,  //禁用缓存
                     dataType: "json",
@@ -274,7 +276,7 @@
 //            flushForm();
             $.ajax({
                 type: "GET",
-                url: "${dynamicServer}/cms/channel/sycQCloudChannel",
+                url: "${dynamicServer}/cms/channel/sycQCloudChannel.do",
                 data: {},
                 contentType: 'application/json',
                 success: function (data) {

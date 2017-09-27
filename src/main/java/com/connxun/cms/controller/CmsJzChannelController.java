@@ -22,14 +22,14 @@ import java.util.List;
 import static com.connxun.util.qcloud.LiveGetInfo.LiveChannelGetChannelList;
 
 /**
- * 课程章节
- * Created by chengpeng on 2017/7/11.
+ * @Author：luoxiaosheng
+ * @Date：2017-09-26 12:09
+ * @Comments：频道
  */
 @Controller
 @RequestMapping("cms/channel")
 public class CmsJzChannelController extends BaseController {
 
-    //0正常 1删除  
     @Autowired
     private JzChannelService jzChannelService;
 
@@ -76,12 +76,12 @@ public class CmsJzChannelController extends BaseController {
     public String save(Jzchannel jzchannel) {
         int user_id = getCurrentUser().getUser_id();//调用父类的方法获取当前用户session
         if (StringUtil.isNullOrEmpty(jzchannel.getId() + "")) {
-            jzchannel.setCreate_mode(""+user_id);//如果第一次数据，没有id  曾新增一个创建人
+            jzchannel.setCreateMode(""+user_id);//如果第一次数据，没有id  曾新增一个创建人
         }
 //        lwTeacher.setUpdateUser(user_id);
 
         jzChannelService.save(jzchannel);
-        return "redirect:/cms/channel/index.do";
+        return "redirect:/cms/channel/index";
     }
 
     /**

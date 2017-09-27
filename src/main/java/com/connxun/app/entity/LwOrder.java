@@ -1,6 +1,5 @@
 package com.connxun.app.entity;
 
-import com.connxun.app.dto.LwCourseDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by xiaoxiao on 2017/7/19.
@@ -91,13 +89,6 @@ public class LwOrder implements Serializable {
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm", timezone = "GMT+8")
     //发货时间
     private Date deliveryDate;
-    @Transient
-    private List<LwTeacher> teacherList;
-
-    @Transient
-    private LwCourse lwCourse;
-    @Transient
-    private LwCourseDTO lwCourseDTO;
     /*导入行号*/
     @Transient
     private int row_index;
@@ -353,30 +344,6 @@ public class LwOrder implements Serializable {
 
     public void setVouchersId(Integer vouchersId) {
         this.vouchersId = vouchersId;
-    }
-
-    public List<LwTeacher> getTeacherList() {
-        return teacherList;
-    }
-
-    public void setTeacherList(List<LwTeacher> teacherList) {
-        this.teacherList = teacherList;
-    }
-
-    public LwCourse getLwCourse() {
-        return lwCourse;
-    }
-
-    public void setLwCourse(LwCourse lwCourse) {
-        this.lwCourse = lwCourse;
-    }
-
-    public LwCourseDTO getLwCourseDTO() {
-        return lwCourseDTO;
-    }
-
-    public void setLwCourseDTO(LwCourseDTO lwCourseDTO) {
-        this.lwCourseDTO = lwCourseDTO;
     }
 
     public String getConsignee() {

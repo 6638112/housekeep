@@ -33,10 +33,9 @@ public class LwVocherController extends AppBaseController {
     private  LwVoucherService lwVoucherService;
 
 
-    @ApiOperation(value = "测试swagger", notes = "测试swagger")
-//    @ApiParam(required = true, name = "test", value = "教程入参")
-    @RequestMapping(value = "voucher/getList")
-    public JsonEntity getList(@ApiParam(required = true, name = "searchVO", value = "教程入参") LwVoucherSearchVO searchVO) {
+    @ApiOperation(value = "代金券list获取", notes = "前端用户获取代金券")
+    @RequestMapping(value = "voucher/getList", method = RequestMethod.GET)
+    public JsonEntity getList(@ApiParam(required = true, name = "searchVO", value = "基础查询参数") LwVoucherSearchVO searchVO) {
 //        RedisUtil.set("WWWWW","123");
         redisClient.set("QQQQQ","123123");
         searchVO.setState(1);
@@ -59,19 +58,6 @@ public class LwVocherController extends AppBaseController {
         }
         return json;
     }
-
-    @ApiOperation(value = "测试swagger2", notes = "测试swagger2")
-//    @ApiParam(required = true, name = "test", value = "教程入参")
-    @RequestMapping(value = "voucher/getList2",method = RequestMethod.GET)
-    public JsonEntity getList2() {
-
-        json.setResultCode("200");
-        json.setMessage("qi请求成功");
-
-        return json;
-    }
-
-
 
 
 }

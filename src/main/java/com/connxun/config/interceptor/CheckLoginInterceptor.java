@@ -35,7 +35,7 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
                 msg.setIsSessionOut(true);
                 WebUtil.out(response, JsonUtil.toStr(msg));
             } else {
-                String str = "<script>top.location.href='" + request.getContextPath() + "/portal/login.do'</script>";
+                String str = "<script>top.location.href='" + request.getContextPath() + "/portal/login'</script>";
                 WebUtil.out(response, str);
             }
             return false;
@@ -50,7 +50,6 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
     }
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
     }
 
 }

@@ -15,24 +15,42 @@ public class OpeProperties {
 
     private static Properties pps;
 
-    /*静态代码块*/
-    static {
+    public OpeProperties(){
         try {
             // 利用文件流方式获取路径————
 //            InputStream in = new BufferedInputStream(new FileInputStream("D:\\IdeaProjects\\housekeep\\target\\classes\\application.properties"));
 //            pps.load(in);
 
             // 利用反射的方式获取路径————
-            // 原本是要用this，这里是tatic所以取父类Object.class或者换成int.class同理
+            // 原本是要用this，这里是static所以取父类Object.class或者换成int.class同理
             // 带 / 是读取classpath的根目录，不带读取当前类所在同一文件夹下.properties
             pps = new Properties();
-            InputStream in = Object.class.getResourceAsStream("/application.properties");
+            InputStream in = this.getClass().getResourceAsStream("/application.properties");
             //从输入流中读取属性列表（键和元素对）
             pps.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    /*静态代码块——测试后无效，Object.class无法获取到对象*/
+//    static {
+//        try {
+//            // 利用文件流方式获取路径————
+////            InputStream in = new BufferedInputStream(new FileInputStream("D:\\IdeaProjects\\housekeep\\target\\classes\\application.properties"));
+////            pps.load(in);
+//
+//            // 利用反射的方式获取路径————
+//            // 原本是要用this，这里是static所以取父类Object.class或者换成int.class同理
+//            // 带 / 是读取classpath的根目录，不带读取当前类所在同一文件夹下.properties
+//            pps = new Properties();
+//            InputStream in = Object.class.getResourceAsStream("/application.properties");
+//            //从输入流中读取属性列表（键和元素对）
+//            pps.load(in);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //利用反射原理操作
 //    public static Properties GetPropertiesInstance() {

@@ -102,7 +102,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>4.0.0</version>
         </dependency>
         <!-- jackson -->
         <dependency>
@@ -164,6 +164,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>
             <version>${spring-version}</version>
+        </dependency>
+        <!--spring test 依赖-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-version}</version>
+            <scope>test</scope>
         </dependency>
         <!--2)spring dao -->
         <dependency>
@@ -393,13 +400,34 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.55</version>
         </dependency>
+        <!-- 调用test类用到 -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            <version>9.0.0.M26</version>
+        </dependency>
+
+
 
 
     </dependencies>
 
 
     <build>
+        <!--<sourceDirectory>src</sourceDirectory>-->
+        <!--<finalName>src</finalName>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--&lt;!&ndash;打包时排除资源文件&ndash;&gt;-->
+                <!--<directory>resources</directory>-->
+                <!--<excludes>-->
+                    <!--<exclude>*.*</exclude>-->
+                <!--</excludes>-->
+            <!--</resource>-->
+        <!--</resources>-->
+
         <plugins>
+            <!-- Compiler 插件, 设定JDK版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -408,6 +436,71 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <!-- war包生成插件 -->
+            <!--<plugin>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<version>2.4</version>-->
+                <!--<configuration>-->
+                    <!--<warSourceDirectory>WebContent</warSourceDirectory>-->
+                    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                    <!--<packagingExcludes>WEB-INF/lib/${project.artifactId}-${version}.jar</packagingExcludes>-->
+                    <!--&lt;!&ndash;将类文件打成jar包&ndash;&gt;-->
+                    <!--<archiveClasses>true</archiveClasses>-->
+                    <!--&lt;!&ndash;将资源文件打到classes目录下&ndash;&gt;-->
+                    <!--<webResources>-->
+                        <!--<resource>-->
+                            <!--<directory>resources</directory>-->
+                            <!--<targetPath>WEB-INF/classes</targetPath>-->
+                            <!--<filtering>true</filtering>-->
+                        <!--</resource>-->
+                    <!--</webResources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
+            <!--&lt;!&ndash; 混淆代码obfuscate&ndash;&gt;-->
+            <!--&lt;!&ndash; 这个插件只能混淆.class文件。只能生成jar包不能生成war包 &ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>com.idfconnect.devtools</groupId>-->
+                <!--<artifactId>idfc-proguard-maven-plugin</artifactId>-->
+                <!--<version>1.0.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>obfuscate</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<options>-->
+                        <!--<repackageclasses>com.idfconnect.sample.obfuscated</repackageclasses>-->
+                    <!--</options>-->
+                    <!--<inputFile>${project.build.outputDirectory}</inputFile>-->
+                    <!--<inputFileFilter>**.class</inputFileFilter>-->
+                    <!--<outputArtifacts>-->
+                        <!--<outputArtifact>-->
+                            <!--<file>${project.build.finalName}/WEB-INF/lib/${project.build.finalName}.jar</file>-->
+                            <!--<type>jar</type>-->
+                        <!--</outputArtifact>-->
+                    <!--</outputArtifacts>-->
+                    <!--<libraryArtifacts>-->
+                        <!--<libraryArtifact>junit:junit:4.11</libraryArtifact>-->
+                    <!--</libraryArtifacts>-->
+                    <!--<libraryJarPaths>-->
+                        <!--<libraryJarPath>${java.home}/lib/jsse.jar</libraryJarPath>-->
+                    <!--</libraryJarPaths>-->
+                    <!--<proguardIncludeFile>${basedir}/resources/${project.artifactId}-maven.pro</proguardIncludeFile>-->
+                <!--</configuration>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>net.sf.proguard</groupId>-->
+                        <!--<artifactId>proguard-base</artifactId>-->
+                        <!--<version>5.0</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+
         </plugins>
     </build>
 

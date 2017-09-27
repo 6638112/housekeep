@@ -1,14 +1,22 @@
 package com.connxun.app.searchVO;
 
+import io.swagger.annotations.ApiParam;
+
 /**
  * Created by 1553280431@qq.com on 2017/5/25.
  * 公共查询VO
  */
 public class CommonSearchVO {
+
+    @ApiParam("页码")
     private int page = 0;//页码
+    @ApiParam("起始位置")
     private int start = 0;//
+    @ApiParam("每页条目数")
     private int length = 15;//每页条目数
+    @ApiParam("总条目数")
     private int total = 0;//总条目数
+    @ApiParam("")
     private int draw;
 
 

@@ -55,7 +55,7 @@
 		//var yzCode = $("#yzCode").val(); 
 		
 		if(!username){
-			layer.msg("请输入账号",{icon:1,time:1000});
+			layer.msg("请输入手机号",{icon:1,time:1000});
 			return false;
 		}
 		if(!password){
@@ -68,21 +68,31 @@
 		}else{
 			return false;
 		} */
-	 $.get("/lwgk/login.do",{"phone":username,"password":password},function(data){
+	 $.get("/lw/login",{"phone":username,"password":password},function(data){
 		 console.log(data);
    		if(data.resultCode ==200){
-   			location.href="index2.html";
-   			var online = $('input[name="online"]:checked').length;
+
+//   			var online = $('input[name="online"]:checked').length;
+            var online=1;
 			var date = new Date();
 			date.setTime(date.getTime()+24*60*60*1000);
-			$.cookie('phone', online==1?username:"", {
-				path: '/',
-				expires: date
-			});
-			$.cookie('password', online==1?password:"", {
-				path: '/',
-				expires: date
-			});
+
+//            if (!localStorage.getItem('userId')||!localStorage.getItem('phone')||!localStorage.getItem('token')) {
+                //将手机号和token存入localStorage
+                localStorage.setItem('userId',data.data.id);
+                localStorage.setItem('phone',data.data.phone);
+                localStorage.setItem('token',data.data.token);
+//            }
+			//手机号存入cookie
+            $.cookie('phone', online==1?username:"", {
+                path: '/',
+                expires: date
+            });
+//            $.cookie('token', online==1?data.data.token:"", {
+//                path: '/',
+//                expires: date
+//            });
+            location.href="index.html";
 			//bool = true; 
    		}else{
 			layer.msg(data.message,{icon:2,time:2000});

@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>老吴公考后台管理系统</title>
+    <title>家政频道后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <%@ include file="common/header.jsp" %>
     <script src="${staticServer }/assets/js/userBrower.js"></script>
@@ -25,10 +25,10 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <h4 class="header blue lighter bigger" style="text-align: center">
-                                        <i class="ace-icon fa fa-globe green"></i> <b>老吴公考后台管理系统</b>
+                                        <i class="ace-icon fa fa-globe green"></i> <b>家政频道后台管理系统</b>
                                     </h4>
                                     <div class="space-6"></div>
-                                    <form id="loginForm" action="portal/checkLogin.do" method="post">
+                                    <form id="loginForm" action="portal/checkLogin" method="post">
                                         <fieldset>
                                             <label class="block clearfix">
                                                 <span class="block input-icon input-icon-right">
@@ -152,7 +152,7 @@
         var verifyCode = $("#verifyCode").val();
         $.ajax({
             type: "post",
-            url: "${dynamicServer}/portal/checkLogin.do",
+            url: "${dynamicServer}/portal/checkLogin",
             data: {
                 username: username,
                 password: password,
@@ -165,7 +165,7 @@
             success: function (data) {
                 if (data.success) {
                     $("#lblMessage").hide();
-                    window.location.href = "${dynamicServer}/portal/index.do";
+                    window.location.href = "${dynamicServer}/portal/index";
                 } else {
                     $("#lblMessage").html(data.msgText);
                     $("#lblMessage").show();
