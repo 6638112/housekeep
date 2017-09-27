@@ -256,9 +256,14 @@
         </property>
     </bean>
 
-    <!--swagger 配置-->
+    <!-- swagger 配置-->
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+    <!-- swagger拦截器放行 -->
+    <!--<mvc:exclude-mapping path="/swagger*/**"></mvc:exclude-mapping>-->
+    <!--<mvc:exclude-mapping path="/v2/**"></mvc:exclude-mapping>-->
+    <!--<mvc:exclude-mapping path="/webjars/**"></mvc:exclude-mapping>-->
 
 
     <!-- 初始化执行任务 -->

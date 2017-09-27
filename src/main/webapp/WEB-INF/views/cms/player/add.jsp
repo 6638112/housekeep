@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ include file="../../../common/taglib.jsp" %>
+<%@ include file="../../common/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>${webTitle }-
-        图片添加</title>
-    <%@ include file="../../../common/header.jsp" %>
+      主播管理</title>
+    <%@ include file="../../common/header.jsp" %>
     <link rel="stylesheet" href="${staticServer}/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet"
           href="${staticServer}/assets/components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css"/>
@@ -30,17 +30,17 @@
 </head>
 
 <body class="no-skin">
-<%@ include file="../../../common/top.jsp" %>
+<%@ include file="../../common/top.jsp" %>
 
 <div class="main-container" id="main-container">
-    <%@ include file="../../../common/menu.jsp" %>
+    <%@ include file="../../common/menu.jsp" %>
     <div class="main-content">
         <div class="main-content-inner">
 
             <div class="page-content">
                 <div class="page-header">
                     <h1>
-                      app启动页
+                     频道
                     </h1>
                 </div>
                 <!-- /.page-header -->
@@ -48,15 +48,15 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <form id="infoForm" name="infoForm" class="form-horizontal"
-                              action="${dynamicServer}/cms/startupPage/save.do?type=${type}" method="post">
+                              action="${dynamicServer}/cms/teacher/save.do" method="post">
                             <div class="form-group ">
                                 <h3 class="row header smaller lighter blue">
-                                    <span class="col-xs-12"> 添加图片 </span><!-- /.col -->
+                                    <span class="col-xs-12"> 添加频道 </span><!-- /.col -->
                                 </h3>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label ">图片</label>
+                                <label class="col-sm-3 control-label ">老师头像</label>
                                 <div class="col-sm-9 control-div">
                                     <ul id="imageUl" class="ace-thumbnails clearfix hidden"
                                         style=" display: inline-block;">
@@ -69,7 +69,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <input type="hidden" id="icon_hidden" name="imgUrl" value="">
+                                    <input type="hidden" id="icon_hidden" name="icon" value="">
                                     <a href="#icon-modal" class="btn btn-white btn-primary" data-toggle="modal"
                                        style="position: absolute;top: 2px;">
                                         <i class="ace-icon glyphicon glyphicon-picture bigger-110"></i> 选择图片
@@ -80,56 +80,35 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">课程名称：</label>
+                                <label class="col-sm-3 control-label">名称：</label>
                                 <div class="col-sm-9">
-                                    <select name="courseNo" id="courseNo" class="col-sm-12 col-lg-7" style="width: 58.5%" title="">
-
-                                    </select>
-                                    <label id="courseNoTip"></label>
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">图片链接：</label>
-                                <div class="col-sm-9">
-                                    <input type="text" id="url" name="url" maxlength="256"
-                                           class="col-xs-10 col-sm-7" placeholder=""
-                                           title="" value="">
-                                    <label id="urlTip"></label>
-                                </div>
-
-                            </div>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-sm-3 control-label">图片类型：</label>--%>
-                                <%--<div class="col-sm-9">--%>
-                                    <%--<select name="type" id="type" class="col-sm-12 col-lg-7" title="">--%>
-                                        <%--<option value="0" selected="selected">启动页</option>--%>
-                                        <%--<option value="1">轮播图</option>--%>
-                                        <%--<option value="2">app分享</option>--%>
-                                        <%--<option value="3">PC侧页</option>--%>
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">图片类型：</label>
-                                <div class="col-sm-9">
-                                    <select name="state" id="state" class="col-sm-12 col-lg-7" title="">
-                                        <option value="0" selected="selected">不可用</option>
-                                        <option value="1">可用</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">排序：</label>
-                                <div class="col-sm-9">
-                                    <input type="number" id="sort" name="sort" maxlength="11"
+                                    <input type="text" id="nickName" name="nickName" maxlength="11"
                                            class="col-xs-10 col-sm-7" placeholder=""
                                            title="" value="">
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">教师手机号：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="phone" name="phone" maxlength="256"
+                                           class="col-xs-10 col-sm-7" placeholder=""
+                                           title="" value=""><label id="nameTip"></label>
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别：</label>
+                                <div class="col-sm-9">
+                                    <select name="sex" id="sex"
+                                            class="col-sm-12 col-lg-7" title="">
+                                        <option value="0">男</option>
+                                        <option value="1" selected>女</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
 
 
                             <div class="clearfix form-actions">
@@ -198,65 +177,15 @@
 </div>
 
 <!-- /.main-container -->
-<%@ include file="../../../common/js.jsp" %>
+<%@ include file="../../common/js.jsp" %>
 
 <script src="${staticServer}/assets/js/jquery.validation/jquery.validate.js"></script>
 <script src="${staticServer}/assets/js/jquery.validation/jquery.validate.zh-CN.js"></script>
 
 <script src="${staticServer}/assets/js/jquery.form.js"></script>
-<script src="${staticServer}/assets/select2/select-topic-tags.js"></script>
-<script src="${staticServer}/assets/select2/select2.full.js"></script>
 <script type="text/javascript">
-    var $lwCourseIds = $('#courseNo');
-        $(function () {
-            /*下拉选择课程*/
-            $lwCourseIds.select2({
-                tags: true,
-//            multiple: true,
-                createTag: function (params) {
-                    console.log(arguments);
-                    return null;
-                },
-                placeholder: '请输入要关联的课程',
-                language: {
-                    noResults: function () {
-                        return '没有找到该课程';
-                    },
-                    inputTooShort: function () {
-                        return '请至少输入1个字符';
-                    }
-                },
-                ajax: {
-                    url: "${dynamicServer}/cms/course/getListByName.do",
-                    type: "get",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            name: params.term,
-                            page: params.page
-                        };
-                    },
-                    processResults: function (data, params) {
-                        params.page = params.page || 1;
+    $(function () {
 
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) {
-                    return markup;
-                },
-                minimumInputLength: 1,
-                templateResult: function (course) {
-                    return course.name|| course.text;
-                },
-                templateSelection: function (course) {
-                    return course.name|| course.text;
-                }
-            });
 
         $("#infoForm").validate({
             errorElement: "label",
@@ -265,20 +194,10 @@
                 error.appendTo($("#" + element.attr('id') + "Tip"));
             },
             rules: {
-                courseNo: {
-                    required: true,
-                },
-                imgUrl: {
-                    required: true,
-                },
-                url: {
+                nickName: {
                     required: true,
                     maxlength: 20
                 },
-                sort:{
-                    required: true,
-                    maxlength: 20
-                }
 
             },
             submitHandler: function (form) {
@@ -325,17 +244,17 @@
                     if (result && result.success) {
                         var img_path = result.createFilePath;
                         $("#closeicon-modal").click();
-                        $("[name=imgUrl]").val(img_path);
+                        $("[name=icon]").val(img_path);
                         var img_url = '${imageServer}' + img_path;
 
                         var $icon_img = $("#icon-img");
                         if ($icon_img.attr("src") != '') {
                             $.ajax({
-                                url: '${uploadServer}/common/delFile.do',
+                                url: '${uploadServer}/common/delFile',
                                 data: {
                                     path: $icon_img.attr("data-path")
                                 },
-                                type: 'GET',
+                                type: 'post',
                                 success: function (result) {
                                     if (result.success) {
                                         $icon_img.attr("src", img_url);
@@ -383,9 +302,12 @@
         });
 
 
+
+
+
     });
     function backIndex() {
-        window.location.href = "${dynamicServer}/cms/startupPage/index.do";
+        window.location.href = "${dynamicServer}/cms/teacher/index.do";
     };
 
 </script>

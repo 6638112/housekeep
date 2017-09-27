@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ include file="../../../common/taglib.jsp" %>
+<%@ include file="../../common/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>${webTitle }-
-        图片添加</title>
-    <%@ include file="../../../common/header.jsp" %>
+        主播管理</title>
+    <%@ include file="../../common/header.jsp" %>
     <link rel="stylesheet" href="${staticServer}/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet"
           href="${staticServer}/assets/components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css"/>
@@ -30,17 +30,17 @@
 </head>
 
 <body class="no-skin">
-<%@ include file="../../../common/top.jsp" %>
+<%@ include file="../../common/top.jsp" %>
 
 <div class="main-container" id="main-container">
-    <%@ include file="../../../common/menu.jsp" %>
+    <%@ include file="../../common/menu.jsp" %>
     <div class="main-content">
         <div class="main-content-inner">
 
             <div class="page-content">
                 <div class="page-header">
                     <h1>
-                      app启动页
+                        老师
                     </h1>
                 </div>
                 <!-- /.page-header -->
@@ -48,109 +48,68 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <form id="infoForm" name="infoForm" class="form-horizontal"
-                              action="${dynamicServer}/cms/startupPage/save.do?type=${type}" method="post">
+                              action="${dynamicServer}/cms/teacher/save.do" method="post">
                             <div class="form-group ">
                                 <h3 class="row header smaller lighter blue">
-                                    <span class="col-xs-12"> 添加图片 </span><!-- /.col -->
+                                    <span class="col-xs-12"> 添加老师 </span><!-- /.col -->
                                 </h3>
                             </div>
+                            <input type="hidden" value="${lwTeacher.id}" id="id" name="id"/>
+
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label ">图片</label>
+                                <label class="col-sm-3 control-label ">老师头像</label>
                                 <div class="col-sm-9 control-div">
-                                    <ul id="imageUl" class="ace-thumbnails clearfix hidden"
+                                    <ul id="imageUl" class="ace-thumbnails clearfix <c:if test="${empty lwTeacher.icon}">hidden</c:if>""
                                         style=" display: inline-block;">
                                         <li>
                                             <a data-rel="colorbox">
-                                                <img width="150" id="icon-img" alt="150x150" data-path="" src=""/>
+                                                <img width="150" id="icon-img" alt="150x150"
+                                                     data-path="${lwTeacher.icon}"
+                                                     src="<c:if test="${not empty lwTeacher.icon}">${imageServer}${lwTeacher.icon}</c:if>"/>
                                                 <div class="tools tools-top">
                                                     <a class="delPic"> <i class="ace-icon fa fa-times red">删除</i>
                                                     </a></div>
                                             </a>
                                         </li>
                                     </ul>
-                                    <input type="hidden" id="icon_hidden" name="imgUrl" value="">
+                                    <input type="hidden" id="icon_hidden" name="icon" value="${lwTeacher.icon}">
                                     <a href="#icon-modal" class="btn btn-white btn-primary" data-toggle="modal"
                                        style="position: absolute;top: 2px;">
                                         <i class="ace-icon glyphicon glyphicon-picture bigger-110"></i> 选择图片
                                     </a>
-                                    <span style="margin-left: 120px">    请上传正方形的图片</span>
-                                    <label id="imgUrlTip"></label>
-
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">跳转类型：</label>
+                                <label class="col-sm-3 control-label">名称：</label>
                                 <div class="col-sm-9">
-                                    <select name="dispatcheObj" id="dispatcheObj" class="col-sm-12 col-lg-7" title="">
-                                        <%--<option value="0" selected="selected">无跳转</option>--%>
-                                        <option value="1" selected="selected">跳转到课程</option>
-                                        <option value="2">代金券申领</option>
-                                        <option value="3">其他活动页</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">课程名称：</label>
-                                <div class="col-sm-9">
-                                    <select name="courseNo" id="courseNo" class="col-sm-12 col-lg-7" style="width: 58.5%" title="">
-
-                                    </select>
-                                    <label id="courseNoTip"></label>
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">代金券名称：</label>
-                                <div class="col-sm-9">
-                                    <select name="voucherNo" id="voucherNo" class="col-sm-12 col-lg-7" style="width: 58.5%" title="">
-
-                                    </select>
-                                    <label id="voucherNoTip"></label>
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">图片链接：</label>
-                                <div class="col-sm-9">
-                                    <input type="text" id="url" name="url" maxlength="256"
-                                           class="col-xs-10 col-sm-7" placeholder=""
-                                           title="" value="">
-                                    <label id="urlTip"></label>
-                                </div>
-
-                            </div>
-                            <%--<div class="form-group">--%>
-                                <%--<label class="col-sm-3 control-label">图片类型：</label>--%>
-                                <%--<div class="col-sm-9">--%>
-                                    <%--<select name="type" id="type" class="col-sm-12 col-lg-7" title="">--%>
-                                        <%--<option value="0" selected="selected">启动页</option>--%>
-                                        <%--<option value="1">轮播图</option>--%>
-                                        <%--<option value="2">app分享</option>--%>
-                                        <%--<option value="3">PC侧页</option>--%>
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">是否生效：</label>
-                                <div class="col-sm-9">
-                                    <select name="state" id="state" class="col-sm-12 col-lg-7" title="">
-                                        <option value="0" selected="selected">暂不生效</option>
-                                        <option value="1">马上生效</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">排序：</label>
-                                <div class="col-sm-9">
-                                    <input type="number" id="sort" name="sort" maxlength="11"
+                                    <input type="text" id="nickName" name="nickName" maxlength="11" value="${lwTeacher.nickName}"
                                            class="col-xs-10 col-sm-7" placeholder=""
                                            title="" value="">
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">教师手机号：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="phone" name="phone" maxlength="256" value="${lwTeacher.phone}"
+                                           class="col-xs-10 col-sm-7" placeholder=""
+                                           title="" value=""><label id="nameTip"></label>
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别：</label>
+                                <div class="col-sm-9">
+                                    <select name="sex" id="sex"
+                                            class="col-sm-12 col-lg-7" title="">
+                                        <option value="0" ${lwTeacher.sex ==0?'selected':''}>男</option>
+                                        <option value="1"    ${lwTeacher.sex ==1?'selected':''}>女</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
 
 
                             <div class="clearfix form-actions">
@@ -219,146 +178,40 @@
 </div>
 
 <!-- /.main-container -->
-<%@ include file="../../../common/js.jsp" %>
+<%@ include file="../../common/js.jsp" %>
 
 <script src="${staticServer}/assets/js/jquery.validation/jquery.validate.js"></script>
 <script src="${staticServer}/assets/js/jquery.validation/jquery.validate.zh-CN.js"></script>
 
+<script src="${staticServer}/assets/ueditor1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script src="${staticServer}/assets/js/jquery.form.js"></script>
+<script src="${staticServer}/assets/components/fuelux/js/spinbox.js"></script>
+<script src="${staticServer}/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="${staticServer}/assets/select2/select-topic-tags.js"></script>
-<script src="${staticServer}/assets/select2/select2.full.js"></script>
 <script type="text/javascript">
-    var $lwCourseIds = $('#courseNo');
-    var $lwVoucherIds = $('#voucherNo');
-        $(function () {
-            /*下拉选择课程*/
-            $lwCourseIds.select2({
-                tags: true,
-//            multiple: true,
-                createTag: function (params) {
-                    console.log(arguments);
-                    return null;
-                },
-                placeholder: '请输入要关联的课程',
-                language: {
-                    noResults: function () {
-                        return '没有找到该课程';
-                    },
-                    inputTooShort: function () {
-                        return '请至少输入1个字符';
-                    }
-                },
-                ajax: {
-                    url: "${dynamicServer}/cms/course/getListByName.do",
-                    type: "get",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            name: params.term,
-                            page: params.page
-                        };
-                    },
-                    processResults: function (data, params) {
-                        params.page = params.page || 1;
+    $(function () {
 
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) {
-                    return markup;
-                },
-                minimumInputLength: 1,
-                templateResult: function (course) {
-                    return course.name|| course.text;
-                },
-                templateSelection: function (course) {
-                    return course.name|| course.text;
-                }
-            });
-            /*下拉选择课程*/
-            $lwVoucherIds.select2({
-                tags: true,
-//            multiple: true,
-                createTag: function (params) {
-                    console.log(arguments);
-                    return null;
-                },
-                placeholder: '请输入要关联的代金券',
-                language: {
-                    noResults: function () {
-                        return '没有找到该代金券';
-                    },
-                    inputTooShort: function () {
-                        return '请至少输入1个字符';
-                    }
-                },
-                ajax: {
-                    url: "${dynamicServer}/cms/voucher/getListByName.do",
-                    type: "get",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            name: params.term,
-                            page: params.page
-                        };
-                    },
-                    processResults: function (data, params) {
-                        params.page = params.page || 1;
 
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) {
-                    return markup;
-                },
-                minimumInputLength: 1,
-                templateResult: function (course) {
-                    return course.name|| course.text;
-                },
-                templateSelection: function (course) {
-                    return course.name|| course.text;
-                }
-            });
 
-            $("#courseNo").parent().parent().hide();
-            $("#voucherNo").parent().parent().hide();
-            $("#url").parent().parent().hide();
-            /*选择发放对象*/
-            $("#dispatcheObj").on('change', function () {
-                switch($("#dispatcheObj").val()){
-                    case '0':
-                        $("#courseNo").parent().parent().hide();
-                        $("#voucherNo").parent().parent().hide();
-                        $("#url").parent().parent().hide();
-                        break;
-                    case '1':
-                        $("#courseNo").parent().parent().show();
-                        $("#voucherNo").parent().parent().hide();
-                        $("#url").parent().parent().hide();
-                        break;
-                    case '2':
-                        $("#courseNo").parent().parent().hide();
-                        $("#voucherNo").parent().parent().show();
-                        $("#url").parent().parent().hide();
-                        break;
-                    case '3':
-                        $("#courseNo").parent().parent().hide();
-                        $("#voucherNo").parent().parent().hide();
-                        $("#url").parent().parent().show();
-                        break;
-                    default:
 
-                }
 
-            });
+
+        var date = dateFormatHour(new Date());
+        $(".datetimepicker").val(date);
+
+        $.fn.datetimepicker.dates['zh'] = {
+            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+            daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+            daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+            meridiem: ["上午", "下午"],
+            today: "今天"
+        };
+
+
+
+
         $("#infoForm").validate({
             errorElement: "label",
             errorClass: "valiError",
@@ -366,10 +219,10 @@
                 error.appendTo($("#" + element.attr('id') + "Tip"));
             },
             rules: {
-                imgUrl: {
+                nickName: {
                     required: true,
+                    maxlength: 20
                 },
-
 
             },
             submitHandler: function (form) {
@@ -416,17 +269,17 @@
                     if (result && result.success) {
                         var img_path = result.createFilePath;
                         $("#closeicon-modal").click();
-                        $("[name=imgUrl]").val(img_path);
+                        $("[name=icon]").val(img_path);
                         var img_url = '${imageServer}' + img_path;
 
                         var $icon_img = $("#icon-img");
                         if ($icon_img.attr("src") != '') {
                             $.ajax({
-                                url: '${uploadServer}/common/delFile.do',
+                                url: '${uploadServer}/common/delFile',
                                 data: {
                                     path: $icon_img.attr("data-path")
                                 },
-                                type: 'GET',
+                                type: 'post',
                                 success: function (result) {
                                     if (result.success) {
                                         $icon_img.attr("src", img_url);
@@ -474,10 +327,13 @@
         });
 
 
+
+
+
     });
     function backIndex() {
-        window.location.href = "${dynamicServer}/cms/startupPage/index.do";
-    };
+        window.location.href = "${dynamicServer}/cms/teacher/index.do";
+    }
 
 </script>
 </body>

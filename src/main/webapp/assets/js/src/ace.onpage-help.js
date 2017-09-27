@@ -39,9 +39,9 @@ jQuery(function($) {
 
 		var parts = url.split('/');
 		if(parts.length == 1) {
-			//for example convert `changes` to `changes/index2.html`
-			if(url.length == 0) url = 'intro';//or convert `empty string` to `intro/index2.html`
-			url = url + '/index2.html';
+			//for example convert `changes` to `changes/index.html`
+			if(url.length == 0) url = 'intro';//or convert `empty string` to `intro/index.html`
+			url = url + '/index.html';
 		}
 		else if(parts.length > 1) {
 			//for example convert `basics/navbar.layout` to `basics/navbar.html`

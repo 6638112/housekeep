@@ -10,8 +10,8 @@
         </button>
         <div class="navbar-header pull-left">
             <!-- #section:basics/navbar.layout.brand -->
-            <a href="${dynamicServer }/portal/index.do" class="navbar-brand">
-                <small><i class="fa fa-train"></i> 老吴公考管理系统</small>
+            <a href="${dynamicServer }/portal/index" class="navbar-brand">
+                <small><i class="fa fa-train"></i> 家政频道管理系统</small>
             </a>
         </div>
         <!-- #section:basics/navbar.dropdown -->
@@ -25,12 +25,12 @@
                 </a>
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
-                        <li><a href="${dynamicServer }/portal/toUpdatePass.do"> <i class="ace-icon fa fa-user"></i> 修改密码
+                        <li><a href="${dynamicServer }/portal/toUpdatePass"> <i class="ace-icon fa fa-user"></i> 修改密码
                         </a></li>
 
                     </ul>
                 </li>
-                <li class="light-blue"><a href="${dynamicServer }/portal/logout.do"> <i class="ace-icon fa fa-power-off"></i>
+                <li class="light-blue"><a href="${dynamicServer }/portal/logout"> <i class="ace-icon fa fa-power-off"></i>
                     注销
                 </a></li>
                 <!-- /section:basics/navbar.user_menu -->
