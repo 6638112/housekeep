@@ -350,6 +350,10 @@ public class DateUtil {
 
     /*UTC时间转换为标准时间*/
     public static Date getUTCtoGMT(int utc){
+        Integer integer = utc;
+        if (integer.toString().length()<10){
+            return null;
+        }
         return new Date(Long.valueOf(utc)*1000);
 
     }

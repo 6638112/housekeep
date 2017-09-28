@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <title>${webTitle }-
-      主播新增</title>
+        频道管理</title>
     <%@ include file="../../common/header.jsp" %>
     <link rel="stylesheet" href="${staticServer}/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet"
@@ -40,7 +40,7 @@
             <div class="page-content">
                 <div class="page-header">
                     <h1>
-                     主播新增
+                        老师
                     </h1>
                 </div>
                 <!-- /.page-header -->
@@ -48,45 +48,70 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <form id="infoForm" name="infoForm" class="form-horizontal"
-                              action="${dynamicServer}/cms/player/save" method="post">
+                              action="${dynamicServer}/cms/teacher/save.do" method="post">
                             <div class="form-group ">
                                 <h3 class="row header smaller lighter blue">
-                                    <span class="col-xs-12"> 添加主播 </span><!-- /.col -->
+                                    <span class="col-xs-12"> 添加老师 </span><!-- /.col -->
                                 </h3>
                             </div>
+                            <input type="hidden" value="${lwTeacher.id}" id="id" name="id"/>
+
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label ">主播头像</label>
+                                <label class="col-sm-3 control-label ">老师头像</label>
                                 <div class="col-sm-9 control-div">
-                                    <ul id="imageUl" class="ace-thumbnails clearfix hidden"
+                                    <ul id="imageUl" class="ace-thumbnails clearfix <c:if test="${empty lwTeacher.icon}">hidden</c:if>""
                                         style=" display: inline-block;">
                                         <li>
                                             <a data-rel="colorbox">
-                                                <img width="150" id="icon-img" alt="150x150" data-path="" src=""/>
+                                                <img width="150" id="icon-img" alt="150x150"
+                                                     data-path="${lwTeacher.icon}"
+                                                     src="<c:if test="${not empty lwTeacher.icon}">${imageServer}${lwTeacher.icon}</c:if>"/>
                                                 <div class="tools tools-top">
                                                     <a class="delPic"> <i class="ace-icon fa fa-times red">删除</i>
                                                     </a></div>
                                             </a>
                                         </li>
                                     </ul>
-                                    <input type="hidden" id="icon_hidden" name="faceUrl" value="">
+                                    <input type="hidden" id="icon_hidden" name="icon" value="${lwTeacher.icon}">
                                     <a href="#icon-modal" class="btn btn-white btn-primary" data-toggle="modal"
                                        style="position: absolute;top: 2px;">
                                         <i class="ace-icon glyphicon glyphicon-picture bigger-110"></i> 选择图片
                                     </a>
-                                    <span style="margin-left: 120px">    请上传正方形的图片</span>
-
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">名称：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="nickName" name="nickName" maxlength="11" value="${lwTeacher.nickName}"
+                                           class="col-xs-10 col-sm-7" placeholder=""
+                                           title="" value="">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">主播ID：</label>
+                                <label class="col-sm-3 control-label">教师手机号：</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="userId" name="userId" maxlength="256"
+                                    <input type="text" id="phone" name="phone" maxlength="256" value="${lwTeacher.phone}"
                                            class="col-xs-10 col-sm-7" placeholder=""
                                            title="" value=""><label id="nameTip"></label>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别：</label>
+                                <div class="col-sm-9">
+                                    <select name="sex" id="sex"
+                                            class="col-sm-12 col-lg-7" title="">
+                                        <option value="0" ${lwTeacher.sex ==0?'selected':''}>男</option>
+                                        <option value="1"    ${lwTeacher.sex ==1?'selected':''}>女</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-4 col-md-8">
                                     <button class="btn btn-primary" type="submit">
@@ -121,7 +146,7 @@
                 <div class="widget-box" style="border: none">
                     <div class="widget-body">
                         <div class="widget-main">
-                            <c:url value="${uploadServer}/common/upload" var="upload_url"/>
+                            <c:url value="${uploadServer}/common/upload.do" var="upload_url"/>
                             <form:form action="${upload_url}"
                                        enctype="multipart/form-data" method="post" id="icon-form">
                                 <input type="hidden" name="file_type" value="icon">
@@ -158,9 +183,33 @@
 <script src="${staticServer}/assets/js/jquery.validation/jquery.validate.js"></script>
 <script src="${staticServer}/assets/js/jquery.validation/jquery.validate.zh-CN.js"></script>
 
+<script src="${staticServer}/assets/ueditor1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script src="${staticServer}/assets/js/jquery.form.js"></script>
+<script src="${staticServer}/assets/components/fuelux/js/spinbox.js"></script>
+<script src="${staticServer}/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+<script src="${staticServer}/assets/select2/select-topic-tags.js"></script>
 <script type="text/javascript">
     $(function () {
+
+
+
+
+
+
+        var date = dateFormatHour(new Date());
+        $(".datetimepicker").val(date);
+
+        $.fn.datetimepicker.dates['zh'] = {
+            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+            daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+            daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+            meridiem: ["上午", "下午"],
+            today: "今天"
+        };
+
+
 
 
         $("#infoForm").validate({
@@ -259,7 +308,7 @@
             var that = $(this);
             var path = that.closest("li").find("img").attr("data-path");
             $.ajax({
-                url: '${uploadServer}/common/delFile',
+                url: '${uploadServer}/common/delFile.do',
                 data: {
                     path: path
                 },
@@ -284,7 +333,7 @@
     });
     function backIndex() {
         window.location.href = "${dynamicServer}/cms/teacher/index.do";
-    };
+    }
 
 </script>
 </body>

@@ -10,7 +10,7 @@ public class JzMemberSearchVO extends CommonSearchVO {
     @ApiParam("群组ID")
     private String groupNo;
     @ApiParam("成员名称")
-    private String MemberName;
+    private String memberName;
 
     public String getGroupNo() {
         return groupNo;
@@ -21,14 +21,14 @@ public class JzMemberSearchVO extends CommonSearchVO {
     }
 
     public String getMemberName() {
-        return MemberName;
+        return memberName;
     }
 
     public String getMemberNameParam() {
-        return "%"+MemberName+"%";
+        return "%"+memberName+"%";
     }
 
     public void setMemberName(String memberName) {
-        MemberName = memberName;
+        memberName = memberName;
     }
 }

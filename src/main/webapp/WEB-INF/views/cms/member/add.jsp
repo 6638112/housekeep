@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <title>${webTitle }-
-      主播新增</title>
+      群组成员管理</title>
     <%@ include file="../../common/header.jsp" %>
     <link rel="stylesheet" href="${staticServer}/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet"
@@ -40,7 +40,7 @@
             <div class="page-content">
                 <div class="page-header">
                     <h1>
-                     主播新增
+                     频道
                     </h1>
                 </div>
                 <!-- /.page-header -->
@@ -48,15 +48,15 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <form id="infoForm" name="infoForm" class="form-horizontal"
-                              action="${dynamicServer}/cms/player/save" method="post">
+                              action="${dynamicServer}/cms/teacher/save.do" method="post">
                             <div class="form-group ">
                                 <h3 class="row header smaller lighter blue">
-                                    <span class="col-xs-12"> 添加主播 </span><!-- /.col -->
+                                    <span class="col-xs-12"> 添加频道 </span><!-- /.col -->
                                 </h3>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label ">主播头像</label>
+                                <label class="col-sm-3 control-label ">老师头像</label>
                                 <div class="col-sm-9 control-div">
                                     <ul id="imageUl" class="ace-thumbnails clearfix hidden"
                                         style=" display: inline-block;">
@@ -69,7 +69,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <input type="hidden" id="icon_hidden" name="faceUrl" value="">
+                                    <input type="hidden" id="icon_hidden" name="icon" value="">
                                     <a href="#icon-modal" class="btn btn-white btn-primary" data-toggle="modal"
                                        style="position: absolute;top: 2px;">
                                         <i class="ace-icon glyphicon glyphicon-picture bigger-110"></i> 选择图片
@@ -80,13 +80,37 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">主播ID：</label>
+                                <label class="col-sm-3 control-label">名称：</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="userId" name="userId" maxlength="256"
+                                    <input type="text" id="nickName" name="nickName" maxlength="11"
+                                           class="col-xs-10 col-sm-7" placeholder=""
+                                           title="" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">教师手机号：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="phone" name="phone" maxlength="256"
                                            class="col-xs-10 col-sm-7" placeholder=""
                                            title="" value=""><label id="nameTip"></label>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别：</label>
+                                <div class="col-sm-9">
+                                    <select name="sex" id="sex"
+                                            class="col-sm-12 col-lg-7" title="">
+                                        <option value="0">男</option>
+                                        <option value="1" selected>女</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-4 col-md-8">
                                     <button class="btn btn-primary" type="submit">
@@ -121,7 +145,7 @@
                 <div class="widget-box" style="border: none">
                     <div class="widget-body">
                         <div class="widget-main">
-                            <c:url value="${uploadServer}/common/upload" var="upload_url"/>
+                            <c:url value="${uploadServer}/common/upload.do" var="upload_url"/>
                             <form:form action="${upload_url}"
                                        enctype="multipart/form-data" method="post" id="icon-form">
                                 <input type="hidden" name="file_type" value="icon">
@@ -259,7 +283,7 @@
             var that = $(this);
             var path = that.closest("li").find("img").attr("data-path");
             $.ajax({
-                url: '${uploadServer}/common/delFile',
+                url: '${uploadServer}/common/delFile.do',
                 data: {
                     path: path
                 },

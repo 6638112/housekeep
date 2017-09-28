@@ -22,6 +22,8 @@ public class JzMember implements Serializable{
     private Integer id;
     //群成员ID
     private String memberAccount;
+    //关联群ID
+    private String groupId;
 
     //群内角色
     private String role;
@@ -47,6 +49,14 @@ public class JzMember implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date shutUpUntil;
 
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
 
     public Integer getId() {
         return id;

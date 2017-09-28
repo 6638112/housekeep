@@ -1,8 +1,10 @@
 package com.connxun.cms.controller;
 
 import com.connxun.app.entity.JzGroup;
+import com.connxun.app.entity.JzMember;
 import com.connxun.app.searchVO.JzGroupSearchVO;
 import com.connxun.app.service.JzGroupService;
+import com.connxun.app.service.JzMemberService;
 import com.connxun.common.controller.BaseController;
 import com.connxun.common.vo.JsonResult;
 import com.connxun.util.datatables.DataTablesResult;
@@ -11,6 +13,7 @@ import com.connxun.util.properties.OpeProperties;
 import com.connxun.util.string.StringUtil;
 import com.tls.entity.TlsGetGroupEntity;
 import com.tls.entity.TlsGroupEntity;
+import com.tls.entity.TlsMemberEntity;
 import com.tls.entity.TlsResultEntity;
 import com.tls.sigcheck.TlsApiUtil;
 import com.tls.sigcheck.TlsSigUtil;
@@ -38,6 +41,8 @@ public class CmsJzGroupController extends BaseController {
 
     @Autowired
     private JzGroupService jzGroupService;
+    @Autowired
+    private JzMemberService jzMemberService;
 
     /**
      * 进入index页面，
@@ -153,7 +158,7 @@ public class CmsJzGroupController extends BaseController {
 
         /*sig鉴权——这里必须要管理员账号，在properties中已经配置了live.admin项可以获取*/
         OpeProperties opeProperties = new OpeProperties();
-        String adminAccount = opeProperties.GetValueByKey("","live.admin").trim();
+        String adminAccount = opeProperties.GetValueByKey("", "live.admin").trim();
         /*获取群组ID list*/
         TlsResultEntity tlsResultEntity = TlsApiUtil.groupList(adminAccount,
                 TlsSigUtil.genSig(adminAccount).getSig(), tlsGroupEntity);
@@ -161,20 +166,20 @@ public class CmsJzGroupController extends BaseController {
         if ("OK".equals(tlsResultEntity.getActionStatus())) {
             List<TlsGroupEntity> tlsGroupEntities = tlsResultEntity.getGroupIdList();
             /*提取群组ID list*/
-            List<String> groupIdList=new ArrayList<String>();
-            for (TlsGroupEntity t:
+            List<String> groupIdList = new ArrayList<String>();
+            for (TlsGroupEntity t :
                     tlsGroupEntities) {
                 groupIdList.add(t.getGroupId());
             }
             /*获取群组详细信息*/
             TlsResultEntity tlsResultEntity2 = TlsApiUtil.getGroupInfo(adminAccount,
                     TlsSigUtil.genSig(adminAccount).getSig(), groupIdList);
-            tlsGroupEntities=tlsResultEntity2.getGroupInfo();
+            tlsGroupEntities = tlsResultEntity2.getGroupInfo();
             /*群组信息转换*/
-            for (TlsGroupEntity t:
+            for (TlsGroupEntity t :
                     tlsGroupEntities) {
 
-                JzGroup jzGroup=new JzGroup();
+                JzGroup jzGroup = new JzGroup();
                 /*部分参数复制*/
                 BeanUtils.copyProperties(t, jzGroup);
                 /*UTC时间参数转换*/
@@ -183,9 +188,20 @@ public class CmsJzGroupController extends BaseController {
                 jzGroup.setLastMsgTime(DateUtil.getUTCtoGMT(t.getLastMsgTime()));
                 jzGroupService.save(jzGroup);
                 /*同步导入群组成员*/
+                for (TlsMemberEntity m:t.getMemberList()){
+                    JzMember jzMember = new JzMember();
+                     /*部分参数复制*/
+                    BeanUtils.copyProperties(m, jzMember);
+                    jzMember.setGroupId(t.getGroupId());
+                    /*UTC时间参数转换*/
+                    jzMember.setJoinTime(DateUtil.getUTCtoGMT(m.getJoinTime()));
+                    jzMember.setLastSendMsgTime(DateUtil.getUTCtoGMT(m.getLastSendMsgTime()));
+                    jzMember.setShutUpUntil(DateUtil.getUTCtoGMT(m.getShutUpUntil()));
+                    jzMemberService.save(jzMember);
+                }
 
             }
-            return new JsonResult(true, "同步更新云端数据成功" );
+            return new JsonResult(true, "同步更新云端数据成功");
 
         } else {
             return new JsonResult(false, "同步更新云端数据失败" + tlsResultEntity.getErrorInfo());

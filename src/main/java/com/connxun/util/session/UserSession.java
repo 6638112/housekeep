@@ -17,6 +17,15 @@ public class UserSession implements Serializable {
     private String realname;//真实姓名
     private int role_id;//角色id
     private String role_name;//角色名称
+    private String userSig; //用户加密Sig
+
+    public String getUserSig() {
+        return userSig;
+    }
+
+    public void setUserSig(String userSig) {
+        this.userSig = userSig;
+    }
 
     public int getUser_id() {
         return user_id;

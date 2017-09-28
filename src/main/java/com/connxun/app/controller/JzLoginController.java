@@ -11,6 +11,9 @@ import com.connxun.util.aliyun.sendsms.AliyunSms;
 import com.connxun.util.easemob.tool.JsonTool;
 import com.connxun.util.redis.RedisUtil;
 import com.connxun.util.string.StringUtil;
+import com.tls.entity.TlsAccountEntity;
+import com.tls.sigcheck.TlsApiUtil;
+import com.tls.sigcheck.TlsSigUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -64,11 +67,11 @@ public class JzLoginController extends AppBaseController {
 //    todo 判断是否手机登录
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value="前端用户登录")
+    @ApiOperation(value = "前端用户登录")
     public JsonEntity login(HttpServletRequest request, HttpServletResponse response,
-                            @ApiParam(required = true, name = "phone", value = "手机号")String phone,
-                            @ApiParam(required = true, name = "password", value = "密码")String password,
-                            @ApiParam(required = true, name = "isApp", value = "是否为app用户")Integer isApp) {
+                            @ApiParam(required = true, name = "phone", value = "手机号") String phone,
+                            @ApiParam(required = true, name = "password", value = "密码") String password,
+                            @ApiParam(required = true, name = "isApp", value = "是否为app用户") Integer isApp) {
        /* if (getOrderDel() == null) {
             CronTriggerRunner.orderDel();
             setOrderDel(1);
@@ -76,7 +79,7 @@ public class JzLoginController extends AppBaseController {
         }*/
         System.out.println(getOrderDel() + "========================================================");
         if (StringUtil.isNullOrEmpty(phone) || StringUtil.isNullOrEmpty(password)) {
-            logger.debug(phone+"参数错误");
+            logger.debug(phone + "参数错误");
             return booleanToJson(false, "参数错误");
         } else {
             JzUser user = JzUserService.getPhone(phone);
@@ -92,12 +95,14 @@ public class JzLoginController extends AppBaseController {
                         String ip = StringUtil.getIp(request);
                         user.setPassword(null);
                         //设置用户token
-                        if (!RedisUtil.contain(user.getId() + "")){
+                        if (!RedisUtil.contain(user.getId() + "")) {
                             user.setToken(StringUtil.getNonceStr());
                             RedisUtil.set(user.getId() + "", user.getToken());
-                        }else{
+                        } else {
                             user.setToken(RedisUtil.get(user.getId() + ""));
                         }
+                        /*设置用户sig*/
+                        user.setUserSig(TlsSigUtil.genSig(user.getId() + "").getSig());
                         request.getSession().setAttribute("userSession", user);
 
                         return objectToJson(user);
@@ -194,11 +199,11 @@ public class JzLoginController extends AppBaseController {
      * @param phone //     * @param state 1 注册验证码   2 修改密码验证码  3 直接登录
      * @return
      */
-    @ApiOperation(value="验证码获取接口",notes = "验证码获取接口")
+    @ApiOperation(value = "验证码获取接口", notes = "验证码获取接口")
     @RequestMapping(value = "/getCaptch", method = RequestMethod.GET)
     @ResponseBody
-    public JsonEntity recaptch(@ApiParam(required = true, name = "phone", value = "手机号")String phone,
-                               @ApiParam(required = true, name = "state", value = "1 注册验证码   2 修改密码验证码  3 直接登录")int state) {
+    public JsonEntity recaptch(@ApiParam(required = true, name = "phone", value = "手机号") String phone,
+                               @ApiParam(required = true, name = "state", value = "1 注册验证码   2 修改密码验证码  3 直接登录") int state) {
         System.out.println("----------------------------------");
         JzUser user = JzUserService.getPhone(phone);
         json = ErrorCode(Code.FAIL);
@@ -266,14 +271,14 @@ public class JzLoginController extends AppBaseController {
     }
 
     //注册
-    @ApiOperation(value="用户注册接口")
+    @ApiOperation(value = "用户注册接口")
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
     @ResponseBody
     public JsonEntity reg(HttpServletRequest request, HttpServletResponse response,
-                          @ApiParam(required = true, name = "phone", value = "手机号")String phone,
-                          @ApiParam(required = true, name = "password", value = "密码")String password,
-                          @ApiParam(required = true, name = "captch", value = "验证码")String captch,
-                          @ApiParam(required = true, name = "inviteCode", value = "邀请码")Integer inviteCode) {
+                          @ApiParam(required = true, name = "phone", value = "手机号") String phone,
+                          @ApiParam(required = true, name = "password", value = "密码") String password,
+                          @ApiParam(required = true, name = "captch", value = "验证码") String captch,
+                          @ApiParam(required = true, name = "inviteCode", value = "邀请码") Integer inviteCode) {
         JsonEntity json = new JsonEntity();
 //        LwInvitationSearchVO vo = new LwInvitationSearchVO();
 //        vo.setState(0);
@@ -318,9 +323,15 @@ public class JzLoginController extends AppBaseController {
 
                         user.setToken(StringUtil.getNonceStr());
                         /*清空redis中的验证码————保证每个验证码只能被使用一次*/
-//                        RedisUtil.set(phone + "1", StringUtil.getNonceStr());
+                        RedisUtil.del(phone + "1");
                         /*保存用户登录token*/
                         RedisUtil.set(user.getId() + "", user.getToken());
+                       /*向云端导入用户*/
+                        TlsAccountEntity tlsAccountEntity = new TlsAccountEntity();
+                        tlsAccountEntity.setIdentifier(user.getId()+"");
+                        TlsApiUtil.accountImport(user.getId()+"",
+                                TlsSigUtil.genSig(user.getId()+"").getSig(),
+                                tlsAccountEntity);
                         json = objectToJson(user);
                     }
                 } else {
@@ -335,20 +346,21 @@ public class JzLoginController extends AppBaseController {
 
     /**
      * 用户修改密码接口
+     *
      * @param request
      * @param response
-     * @param phone 手机号
+     * @param phone    手机号
      * @param password 新密码
-     * @param captch 验证码
+     * @param captch   验证码
      * @return
      */
-    @ApiOperation(value="用户修改密码接口")
+    @ApiOperation(value = "用户修改密码接口")
     @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
     @ResponseBody
     public JsonEntity updatePwd(HttpServletRequest request, HttpServletResponse response,
-                                @ApiParam(required = true, name = "phone", value = "手机号")String phone,
-                                @ApiParam(required = true, name = "password", value = "新密码")String password,
-                                @ApiParam(required = true, name = "captch", value = "验证码")String captch) {
+                                @ApiParam(required = true, name = "phone", value = "手机号") String phone,
+                                @ApiParam(required = true, name = "password", value = "新密码") String password,
+                                @ApiParam(required = true, name = "captch", value = "验证码") String captch) {
         JsonEntity json = new JsonEntity();
         if (StringUtil.isNotNullOrEmpty(password) && StringUtil.isNotNullOrEmpty(phone)) {
             String sysCaptch = RedisUtil.get(phone + "2");
@@ -378,7 +390,8 @@ public class JzLoginController extends AppBaseController {
 
     /**
      * 手机验证码登录接口
-     * @param phone 手机号
+     *
+     * @param phone  手机号
      * @param captch 验证码
      * @return
      */
@@ -387,7 +400,7 @@ public class JzLoginController extends AppBaseController {
     @ResponseBody
     public JsonEntity loginCaptch(
             @ApiParam(required = true, name = "phone", value = "手机号") String phone,
-            @ApiParam(required = true, name = "captch", value = "验证码")String captch) {
+            @ApiParam(required = true, name = "captch", value = "验证码") String captch) {
 
         JzUser JzUser = JzUserService.getPhone(phone);
         if (JzUser != null) {
@@ -407,6 +420,7 @@ public class JzLoginController extends AppBaseController {
 
     /**
      * token作废接口
+     *
      * @return
      */
     @ResponseBody
@@ -469,7 +483,7 @@ public class JzLoginController extends AppBaseController {
     }
 
     //    邀请码 是否存在
-    @RequestMapping(value = "isInvite",method = RequestMethod.GET)
+    @RequestMapping(value = "isInvite", method = RequestMethod.GET)
     @ResponseBody
     public JsonEntity isInvite(Integer inviteCode) {
         Map<String, Integer> map = new HashMap<String, Integer>();

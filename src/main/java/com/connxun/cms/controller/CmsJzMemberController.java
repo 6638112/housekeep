@@ -21,6 +21,7 @@ import java.util.List;
  * @Comments：群组成员
  */
 @Controller
+@RequestMapping("cms/member")
 public class CmsJzMemberController  extends BaseController {
 
     @Autowired
@@ -119,7 +120,7 @@ public class CmsJzMemberController  extends BaseController {
     public ModelAndView toUpdate(Integer id) {
         JzMember lwTeacher = jzMemberService.findOne(id);
         ModelAndView mv = new ModelAndView("/cms/member/update");
-        mv.addObject("jzMemberTeacher", lwTeacher);
+        mv.addObject("jzMember", lwTeacher);
         return mv;
 
     }

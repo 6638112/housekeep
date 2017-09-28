@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>${webTitle }-群组管理</title>
+    <title>${webTitle }-群组成员管理</title>
     <%@ include file="../../common/header.jsp" %>
 </head>
 
@@ -46,9 +46,9 @@
                                             </div>
                                             <div class="col-xs-3">
                                                 <div class="form-group">
-                                                    <label class="control-label col-xs-6 col-lg-5" style="line-height: 15px">群组名称：</label>
+                                                    <label class="control-label col-xs-6 col-lg-5" style="line-height: 15px">成员名称：</label>
                                                     <div class="col-xs-6 col-lg-7">
-                                                        <input type="text" id="groupNameSearch"
+                                                        <input type="text" id="memberNameSearch"
                                                                class="col-xs-12 col-sm-12 col-lg-10"
                                                                value="" title=""/>
                                                     </div>
@@ -88,13 +88,13 @@
                                        class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th style="background-color: #E5E5E5">群组ID</th>
-                                        <th style="background-color: #E5E5E5">群组名称</th>
-                                        <th style="background-color: #E5E5E5">群组类型</th>
-                                        <th style="background-color: #E5E5E5">群简介</th>
-                                        <th style="background-color: #E5E5E5">群主ID</th>
-                                        <th style="background-color: #E5E5E5">创建时间</th>
-                                        <th style="background-color: #E5E5E5">操作</th>
+                                        <th style="background-color: #E5E5E5">群组成员ID</th>
+                                        <th style="background-color: #E5E5E5">群内角色</th>
+                                        <th style="background-color: #E5E5E5">加入时间</th>
+                                        <th style="background-color: #E5E5E5">已读消息</th>
+                                        <th style="background-color: #E5E5E5">消息屏蔽</th>
+                                        <th style="background-color: #E5E5E5">最后发言</th>
+                                        <th style="background-color: #E5E5E5">禁言截止</th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -123,11 +123,11 @@
 
 
     function addTeacher() {
-        window.location.href = "${dynamicServer}/cms/teacher/toAdd.do";
+        window.location.href = "${dynamicServer}/cms/member/toAdd";
     }
 
     function updateTeacher(id) {
-        window.location.href = "${dynamicServer}/cms/teacher/toUpdate.do?id=" + id;
+        window.location.href = "${dynamicServer}/cms/member/toUpdate?id=" + id;
     }
 
 
@@ -145,7 +145,7 @@
             getQueryCondition: function (data) {
                 var param = {};
                 param.groupNo = $("#groupNoSearch").val();
-                param.groupName = $("#groupNameSearch").val();
+                param.memberName = $("#memberNameSearch").val();
                 param.page = data.start;
                 param.length = data.length;
                 return param;
@@ -168,7 +168,7 @@
             ajax: function (data, callback) {//ajax配置为function,手动调用异步查询
                 $.ajax({
                     type: "GET",
-                    url: '${dynamicServer}/cms/group/getList',//请求数据的参数
+                    url: '${dynamicServer}/cms/member/getList',//请求数据的参数
                     data: userParam.getQueryCondition(data),
                     cache: false,  //禁用缓存
                     dataType: "json",
@@ -192,59 +192,44 @@
 //                },
 
                 {
-                    data: "groupId",
+                    data: "memberAccount",
                     render: function (data) {
                         return data || "无";
                     }
                 },
 
                 {
-                    data: "name",
+                    data: "role",
                     render: function (data) {
                         return data || "无";
                     }
                 },
                 {
-                    data: "type",
+                    data: "joinTime",
                     render: function (data) {
-                        var state = "";
-                        switch (data) {
-                            case 'Private':
-                                state = "私有群";
-                                break;
-                            case 'Public':
-                                state = "公开群";
-                                break;
-                            case 'ChatRoom':
-                                state = "聊天室";
-                                break;
-                            case 'AVChatRoom':
-                                state = "互动直播聊天室";
-                                break;
-                            case 'BChatRoom':
-                                state = "在线成员广播大群";
-                                break;
-                            default :
-                                state = "互动直播聊天室";
-                                break;
-                        }
-                        return state;
+                        return data!=null? dateFormat(data) : "" ;
                     }
                 },
                 {
-                    data: "introduction",
+                    data: "msgSeq",
                     render: function (data) {
                         return data || "无";
                     }
                 },
                 {
-                    data: "owner_Account",
+                    data: "msgFlag",
                     render: function (data) {
                         return data || "无";
                     }
                 },
                 {
-                    data: "createTime",
+                    data: "lastSendMsgTime",
+                    render: function (data) {
+                        return data!=null? dateFormat(data) : "" ;
+                    }
+                },
+                {
+                    data: "shutUpUntil",
                     render: function (data) {
                         return data!=null? dateFormat(data) : "" ;
                     }
@@ -294,7 +279,7 @@
 //            flushForm();
             $.ajax({
                 type: "GET",
-                url: "${dynamicServer}/cms/group/sycQCloudGroup",
+                url: "${dynamicServer}/cms/member/sycQCloudGroup",
                 data: {},
                 contentType: 'application/json',
                 success: function (data) {
@@ -347,7 +332,7 @@
         });
         $.ajax({
             type: "get",
-            url: "${dynamicServer}/cms/group/findAll",
+            url: "${dynamicServer}/cms/member/findAll",
             contentType: "application/json",
             success: function (data) {
 
@@ -359,7 +344,7 @@
         flushForm();
         $.ajax({
             type: "GET",
-            url: "${dynamicServer}/cms/group/findOne",
+            url: "${dynamicServer}/cms/member/findOne",
             data: {
                 "id": id
             },
@@ -378,7 +363,7 @@
             if (result) {
                 $.ajax({
                     type: "GET",
-                    url: "${dynamicServer}/cms/group/delete",
+                    url: "${dynamicServer}/cms/teacher/delete",
                     data: {
                         "id": id
                     },

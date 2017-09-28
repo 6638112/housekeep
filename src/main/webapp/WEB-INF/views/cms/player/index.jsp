@@ -1,4 +1,3 @@
-
 <%@ include file="../../common/taglib.jsp" %>
 <%@ page pageEncoding="utf-8" %>
 <!DOCTYPE html>
@@ -37,7 +36,8 @@
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <div class="form-group">
-                                                    <label class="control-label col-xs-6 col-lg-5" style="line-height: 15px">主播名称：</label>
+                                                    <label class="control-label col-xs-6 col-lg-5"
+                                                           style="line-height: 15px">主播名称：</label>
                                                     <div class="col-xs-6 col-lg-7">
                                                         <input type="text" id="playerNameSearch"
                                                                class="col-xs-12 col-sm-12 col-lg-10"
@@ -47,7 +47,8 @@
                                             </div>
                                             <div class="col-xs-3">
                                                 <div class="form-group">
-                                                    <label class="control-label col-xs-6 col-lg-5" style="line-height: 15px">频道名称：</label>
+                                                    <label class="control-label col-xs-6 col-lg-5"
+                                                           style="line-height: 15px">频道名称：</label>
                                                     <div class="col-xs-6 col-lg-7">
                                                         <input type="text" id="channelNameSearch"
                                                                class="col-xs-12 col-sm-12 col-lg-10"
@@ -67,13 +68,8 @@
                                                        href="#modal-edit" data-toggle="modal"
                                                        data-backdrop="static" onclick="addTeacher()"
                                                        id="btn-add">
-                                                        <i class="ace-icon fa fa-plus"></i> 新增
+                                                        <i class="ace-icon fa fa-plus"></i> 新增主播
                                                     </a>
-                                                    <button type="button" class="btn btn-primary btn-sm"
-                                                            id="btn-synQCloud">
-                                                        <i class="ace-icon fa "></i> 更新云端数据
-                                                    </button>
-
 
                                                 </div>
                                             </div>
@@ -92,7 +88,7 @@
                                         <th style="background-color: #E5E5E5">主播姓名</th>
                                         <th style="background-color: #E5E5E5">频道名称</th>
                                         <th style="background-color: #E5E5E5">群组名称</th>
-                                        <th style="background-color: #E5E5E5">过期时间</th>
+                                        <th style="background-color: #E5E5E5">有效时间</th>
                                         <th style="background-color: #E5E5E5">主播状态</th>
                                         <th style="background-color: #E5E5E5">操作</th>
                                     </tr>
@@ -123,11 +119,11 @@
 
 
     function addTeacher() {
-        window.location.href = "${dynamicServer}/cms/teacher/toAdd.do";
+        window.location.href = "${dynamicServer}/cms/player/toAdd";
     }
 
     function updateTeacher(id) {
-        window.location.href = "${dynamicServer}/cms/teacher/toUpdate.do?id=" + id;
+        window.location.href = "${dynamicServer}/cms/player/toUpdate?id=" + id;
     }
 
 
@@ -192,55 +188,59 @@
 //                },
 
                 {
-                    data: "channel_id",
+                    data: "playerName",
                     render: function (data) {
                         return data || "无";
                     }
                 },
 
                 {
-                    data: "channel_name",
+                    data: "channelName",
                     render: function (data) {
                         return data || "无";
                     }
                 },
                 {
-                    data: "channel_status",
+                    data: "groupName",
+                    render: function (data) {
+                        return data || "无";
+                    }
+                },
+                {
+                    data: "expireDate",
+                    render: function (data) {
+                        return data != null ? dateFormat(data) : "";
+                    }
+                },
+                {
+                    data: "status",
                     render: function (data) {
                         var state = "";
                         switch (data) {
                             case 0:
-                                state = "断流";
+                                state = "正常";
                                 break;
                             case 1:
-                                state = "开启";
-                                break;
-                            case 3:
-                                state = "关闭";
+                                state = "封禁";
                                 break;
                             default :
-                                state = "断流";
+                                state = "正常";
                                 break;
                         }
                         return state;
                     }
                 },
                 {
-                    data: "create_time",
-                    render: function (data) {
-                        return data!=null? dateFormat(data) : "" ;
-                    }
-                },
-                {
                     data: "id",
                     width: "155px",
                     render: function (data, type, row) {
-                        return '<a class="btn  btn-sm btn-info" href="#modal-edit" data-toggle="modal"  data-backdrop="static" ' +
+                        var button = '<a class="btn  btn-sm btn-info" href="#modal-edit" data-toggle="modal"  data-backdrop="static" ' +
                             'onclick="updateTeacher(\'' + data + '\')">' +
-                            '<i class="ace-icon fa fa-pencil-square-o "></i>修改</a>' +
-                            '&nbsp;&nbsp;' +
+                            '<i class="ace-icon fa fa-pencil-square-o "></i>修改</a>';
+                        button += '&nbsp;&nbsp;' +
                             '<a class="btn btn-sm btn-danger" onclick="delUser(\'' + data + '\')">' +
                             '<i class="ace-icon fa fa-pencil-square-o "></i>删除</a>';
+                        return button
                     }
                 }
             ],
@@ -271,22 +271,6 @@
             table.draw();
         });
 
-        /*更新云端数据*/
-        $("#btn-synQCloud").on("click", function () {
-//            flushForm();
-            $.ajax({
-                type: "GET",
-                url: "${dynamicServer}/cms/channel/sycQCloudChannel.do",
-                data: {},
-                contentType: 'application/json',
-                success: function (data) {
-                    alert(data.message);
-                    table.draw();
-
-                }
-            });
-
-        });
 
         /*添加手机号验证方法*/
         jQuery.validator.addMethod("phone", function (value, element) {
@@ -330,7 +314,7 @@
         });
         $.ajax({
             type: "get",
-            url: "${dynamicServer}/cms/teacher/findAll.do",
+            url: "${dynamicServer}/cms/player/findAll",
             contentType: "application/json",
             success: function (data) {
 
@@ -342,7 +326,7 @@
         flushForm();
         $.ajax({
             type: "GET",
-            url: "${dynamicServer}/cms/teacher/findOne.do",
+            url: "${dynamicServer}/cms/player/findOne",
             data: {
                 "id": id
             },
@@ -357,11 +341,11 @@
 
     /*删除*/
     function delUser(id) {
-        bootbox.confirm("<a style='font-size: 17px;color: red'>确定要删除该用户信息？</a>", function (result) {
+        bootbox.confirm("<a style='font-size: 17px;color: red'>确定要删除该主播信息？</a>", function (result) {
             if (result) {
                 $.ajax({
                     type: "GET",
-                    url: "${dynamicServer}/cms/teacher/delete.do",
+                    url: "${dynamicServer}/cms/player/delete",
                     data: {
                         "id": id
                     },

@@ -32,10 +32,11 @@ public class JzPlayerRepositoryImpl extends JdbcDaoSupport implements JzPlayerRe
         String sql = "";
 
 
-        sql = "select lv.*,ju.realName,jc.channelName  " +
+        sql = "select lv.*,ju.realName playerName,jc.channelName ,jg.name groupName " +
                 "  from jz_player lv " +
                 "LEFT JOIN jz_user ju on lv.userId=ju.id  " +
-                "LEFT JOIN jz_channel jc on lv.channelId=jc.id  where 1=1 ";
+                "LEFT JOIN jz_channel jc on lv.channelId=jc.id " +
+                "LEFT JOIN jz_group jg on lv.groupId=jg.id where 1=1 ";
 
 
         sql += createSearchSql(searchVO);//调用创建查询sql方法

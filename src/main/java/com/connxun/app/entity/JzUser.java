@@ -87,14 +87,10 @@ public class JzUser implements Serializable {
     /*导入行号*/
     @Transient
     private int row_index;
+    //用户加密Sig
+    @Transient
+    private String userSig;
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 
     /**
      * 新增时执行的函数
@@ -117,6 +113,22 @@ public class JzUser implements Serializable {
         if (updateDate == null) {
             updateDate = new Date();
         }
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getUserSig() {
+        return userSig;
+    }
+
+    public void setUserSig(String userSig) {
+        this.userSig = userSig;
     }
 
     public String getNickName() {

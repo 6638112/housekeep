@@ -21,11 +21,21 @@ public class JzPlayer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     //用户ID
-    private String userId;
+    private Integer userId;
     //频道ID
     private Integer channelId;
     //群ID
-    private String groupId;
+    private Integer groupId;
+
+    //主播头像
+    private String faceUrl;
+    //主播简介
+    private String introduction;
+    //主播推流地址
+    private String livePushUrl;
+
+
+
     //有效时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -83,6 +93,29 @@ public class JzPlayer implements Serializable {
         }
     }
 
+    public String getFaceUrl() {
+        return faceUrl;
+    }
+
+    public void setFaceUrl(String faceUrl) {
+        this.faceUrl = faceUrl;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getLivePushUrl() {
+        return livePushUrl;
+    }
+
+    public void setLivePushUrl(String livePushUrl) {
+        this.livePushUrl = livePushUrl;
+    }
 
     public String getPlayerName() {
         return playerName;
@@ -116,11 +149,11 @@ public class JzPlayer implements Serializable {
         this.id = id;
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -132,11 +165,11 @@ public class JzPlayer implements Serializable {
         this.channelId = channelId;
     }
 
-    public String getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 

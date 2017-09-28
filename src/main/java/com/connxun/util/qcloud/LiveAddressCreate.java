@@ -1,8 +1,6 @@
 package com.connxun.util.qcloud;
 
-import com.connxun.util.date.DateUtil;
 import com.connxun.util.encrypt.EncryptUtil;
-import com.connxun.util.string.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,31 +25,29 @@ public class LiveAddressCreate {
     /**
      * 创建推流地址
      * @param deadTime 地址有效时间
-     * @param streamId 直播码（用户表示符）
+     * @param streamId 直播码（用户表标识符）
      * @return
      */
-    public static String createLiveAddress(String deadTime,String streamId){
-        Date liveDate;
-        if (StringUtil.isNotNullOrEmpty(deadTime)){
-            liveDate = DateUtil.stringToDate(deadTime,"yyyy-MM-dd HH:mm:ss");
-        }else{
-            /*获取当前时间+1*/
+    public static String createLiveAddress(Date deadTime,String streamId){
+        if (deadTime==null){
+//            liveDate = DateUtil.stringToDate(deadTime,"yyyy-MM-dd HH:mm:ss");
+//        }else{
+            /*如果时间参数不存在，则设置当前时间+1*/
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(new Date());
             calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
 
-            liveDate=calendar.getTime();
-            System.out.println(liveDate.toString());
+            deadTime=calendar.getTime();
         }
 
         streamId=(BIZID+"_"+streamId);
 
         LOG.info(LIVEPUSH +streamId
                 + "?" + "bizid="+BIZID
-                + "&" +getSafeUrl(PUSHKEY, streamId, liveDate.getTime()/1000));
+                + "&" +getSafeUrl(PUSHKEY, streamId, deadTime.getTime()/1000));
         return LIVEPUSH +streamId
                 + "?" + "bizid="+BIZID
-                + "&" +getSafeUrl(PUSHKEY, streamId, liveDate.getTime()/1000);
+                + "&" +getSafeUrl(PUSHKEY, streamId, deadTime.getTime()/1000);
     }
 
     /**

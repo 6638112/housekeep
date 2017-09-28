@@ -31,7 +31,7 @@ public class JzChannel implements Serializable {
     String channelName;
     //直播间状态 0:断流；1:开启；3:关闭
     @JsonProperty("channel_status")
-    Integer channelStatus;
+    Integer channelStatus = 0;
     //创建码
     @JsonProperty("create_mode")
     String createMode;

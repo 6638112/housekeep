@@ -77,7 +77,7 @@ public class CmsJzChannelController extends BaseController {
     public String save(JzChannel jzchannel) {
         int user_id = getCurrentUser().getUser_id();//调用父类的方法获取当前用户session
         if (StringUtil.isNullOrEmpty(jzchannel.getId() + "")) {
-            jzchannel.setCreateMode(""+user_id);//如果第一次数据，没有id  曾新增一个创建人
+            jzchannel.setCreateMode("" + user_id);//如果第一次数据，没有id  曾新增一个创建人
         }
 //        lwTeacher.setUpdateUser(user_id);
 
@@ -118,11 +118,12 @@ public class CmsJzChannelController extends BaseController {
 
     /**
      * 跳转更新页面
+     *
      * @param id
      * @return
      */
     @RequestMapping(value = "toUpdate", method = RequestMethod.GET)
-    public ModelAndView toUpdate(Integer id ) {
+    public ModelAndView toUpdate(Integer id) {
         JzChannel lwTeacher = jzChannelService.findOne(id);
         ModelAndView mv = new ModelAndView("/cms/channel/update");
         mv.addObject("lwTeacher", lwTeacher);
@@ -138,19 +139,19 @@ public class CmsJzChannelController extends BaseController {
     @RequestMapping(value = "sycQCloudChannel", method = RequestMethod.GET)
     @ResponseBody
     public JsonResult sycQCloudChannel() {
-        String jsonResult=LiveChannelGetChannelList();
-        ChannelListBean channelListBean=(ChannelListBean)JsonUtil.toObject(ChannelListBean.class,jsonResult);
-        if (channelListBean.getRet()==0){
-            List<JzChannel> list=channelListBean.getOutput().getChannel_list();
-            if (list.size()>0){
-                for (JzChannel jzchannel:
-                     list) {
+        String jsonResult = LiveChannelGetChannelList();
+        ChannelListBean channelListBean = (ChannelListBean) JsonUtil.toObject(ChannelListBean.class, jsonResult);
+        if (channelListBean.getRet() == 0) {
+            List<JzChannel> list = channelListBean.getOutput().getChannel_list();
+            if (list.size() > 0) {
+                for (JzChannel jzchannel :
+                        list) {
                     jzChannelService.save(jzchannel);
                 }
             }
-            return new JsonResult(true,"同步更新云端数据成功");
+            return new JsonResult(true, "同步更新云端数据成功");
         }
-        return new JsonResult(false,"同步更新云端数据失败");
+        return new JsonResult(false, "同步更新云端数据失败");
 
     }
 }
