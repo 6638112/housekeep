@@ -36,7 +36,7 @@ import java.util.Map;
  * Created by Mac on 2017/6/11.
  */
 @Controller
-@RequestMapping(value = "/lw")
+@RequestMapping(value = "/jz")
 public class JzLoginController extends AppBaseController {
 
     private static Logger logger = LoggerFactory.getLogger("controllerLog");

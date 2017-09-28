@@ -3,11 +3,12 @@ package com.connxun.app.controller;
 import com.connxun.app.dto.JzChannelDTO;
 import com.connxun.app.dto.JzRoomSigDTO;
 import com.connxun.app.entity.JsonEntity;
-import com.connxun.app.entity.JzUser;
 import com.connxun.app.entity.JzChannel;
+import com.connxun.app.entity.JzUser;
 import com.connxun.app.searchVO.JzChannelSearchVO;
 import com.connxun.app.service.JzChannelService;
 import com.connxun.app.service.JzUserService;
+import com.connxun.util.mail.PwdMailSender;
 import com.connxun.util.qcloud.LiveAddressCreate;
 import com.connxun.util.redis.RedisUtil;
 import com.tls.sigcheck.TlsSigUtil;
@@ -36,6 +37,8 @@ public class JzChannelController extends AppBaseController  {
     private JzChannelService jzChannelService;
     @Autowired
     private JzUserService lwUserService;
+    @Autowired
+    private PwdMailSender pwdMailSender;
 
     // TODO: 2017-09-25 频道关联主播没做
     /**
@@ -47,6 +50,7 @@ public class JzChannelController extends AppBaseController  {
     @RequestMapping(value = "getList", method = RequestMethod.GET)
     @ResponseBody
     public JsonEntity getList(JzChannelSearchVO searchVO) {
+
         searchVO.setChannelStatus(0);
         // TODO: 2017-09-20 添加返回频道主播——关联查询
         List<JzChannel> list = jzChannelService.getList(searchVO);
@@ -65,7 +69,7 @@ public class JzChannelController extends AppBaseController  {
      * @param channelId
      * @return
      */
-    @ApiOperation(value="频道列表获取接口",notes = "前端用户获取频道列表")
+    @ApiOperation(value="频道信息获取接口",notes = "前端用户获取频道信息")
     @RequestMapping(value = "getChannelById", method = RequestMethod.GET)
     @ResponseBody
     public JsonEntity getChannelById(@ApiParam(required = true, name = "channelId", value = "频道ID")Integer channelId) {
@@ -75,7 +79,7 @@ public class JzChannelController extends AppBaseController  {
         if (jzchannel!=null){
             jzChannelDTO=new JzChannelDTO();
             BeanUtils.copyProperties(jzchannel, jzChannelDTO);
-            jzChannelDTO.setChannel_url(LiveAddressCreate.getLivePlayAddress(jzChannelDTO.getChannel_id(),0,0));
+            jzChannelDTO.setChannelUrl(LiveAddressCreate.getLivePlayAddress(jzChannelDTO.getChannelId(),0,0));
             json = objectToJson(jzChannelDTO);
         }else {
             json=objectToJson(new JzChannelDTO());

@@ -8,15 +8,15 @@ import io.swagger.annotations.ApiParam;
  */
 public class CommonSearchVO {
 
-    @ApiParam("页码")
+    @ApiParam(required = false, name = "page", value = "页码")
     private int page = 0;//页码
-    @ApiParam("起始位置")
+    @ApiParam(required = false, name = "start", value = "起始位置")
     private int start = 0;//
-    @ApiParam("每页条目数")
+    @ApiParam(required = false, name = "length", value = "每页条目数")
     private int length = 15;//每页条目数
-    @ApiParam("总条目数")
+    @ApiParam(required = false, name = "total", value = "总条目数")
     private int total = 0;//总条目数
-    @ApiParam("")
+    @ApiParam(required = false, name = "draw", value = "")
     private int draw;
 
 

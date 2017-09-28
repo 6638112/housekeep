@@ -12,15 +12,15 @@ public class JzChannelDTO implements Serializable {
     //内部ID
     Integer id;
     //频道ID
-    String channel_id;
+    String channelId;
     //直播间名称
-    String channel_name;
+    String channelName;
     //直播间状态 0:断流；1:开启；3:关闭
-    Integer channel_status;
+    Integer channelStatus;
     //频道主播
-    String channel_player;
+    String channelPlayer;
     //频道链接
-    String channel_url;
+    String channelUrl;
 
     public Integer getId() {
         return id;
@@ -30,43 +30,43 @@ public class JzChannelDTO implements Serializable {
         this.id = id;
     }
 
-    public String getChannel_id() {
-        return channel_id;
+    public String getChannelId() {
+        return channelId;
     }
 
-    public void setChannel_id(String channel_id) {
-        this.channel_id = channel_id;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
-    public String getChannel_name() {
-        return channel_name;
+    public String getChannelName() {
+        return channelName;
     }
 
-    public void setChannel_name(String channel_name) {
-        this.channel_name = channel_name;
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 
-    public Integer getChannel_status() {
-        return channel_status;
+    public Integer getChannelStatus() {
+        return channelStatus;
     }
 
-    public void setChannel_status(Integer channel_status) {
-        this.channel_status = channel_status;
+    public void setChannelStatus(Integer channelStatus) {
+        this.channelStatus = channelStatus;
     }
 
-    public String getChannel_player() {
-        return channel_player;
+    public String getChannelPlayer() {
+        return channelPlayer;
     }
 
-    public void setChannel_player(String channel_player) {
-        this.channel_player = channel_player;
+    public void setChannelPlayer(String channelPlayer) {
+        this.channelPlayer = channelPlayer;
     }
 
-    public String getChannel_url() {
-        return channel_url;
+    public String getChannelUrl() {
+        return channelUrl;
     }
 
-    public void setChannel_url(String channel_url) {
-        this.channel_url = channel_url;
+    public void setChannelUrl(String channelUrl) {
+        this.channelUrl = channelUrl;
     }
 }

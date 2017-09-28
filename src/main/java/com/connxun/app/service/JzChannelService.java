@@ -49,4 +49,9 @@ public class JzChannelService implements BaseService<JzChannel,Integer> {
         return jzChannelRepository.getList(searchVO);
 
     }
+    public JzChannel getChannelByChannelId(String channelId) {
+        return jzChannelRepository.getChannelByChannelId(channelId);
+
+    }
+
 }

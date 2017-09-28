@@ -186,6 +186,11 @@ public class CmsJzGroupController extends BaseController {
                 jzGroup.setCreateTime(DateUtil.getUTCtoGMT(t.getCreateTime()));
                 jzGroup.setLastInfoTime(DateUtil.getUTCtoGMT(t.getLastInfoTime()));
                 jzGroup.setLastMsgTime(DateUtil.getUTCtoGMT(t.getLastMsgTime()));
+                /*数据验重*/
+                JzGroup jzGroup2=jzGroupService.getGroupByGroupId(jzGroup.getGroupId());
+                if (jzGroup2!=null){
+                    jzGroup.setId(jzGroup2.getId());
+                }
                 jzGroupService.save(jzGroup);
                 /*同步导入群组成员*/
                 for (TlsMemberEntity m:t.getMemberList()){

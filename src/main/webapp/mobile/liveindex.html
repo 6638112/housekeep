@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>腾讯IM(直播聊天室) Web Demo(V1.2)</title>
+    <title>家政频道(直播聊天室)</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="format-detection" content="telephone=no">
@@ -13,8 +13,8 @@
 </head>
 <body style="background-image: url('/mobile/img/back-img2.png')">
 <div class="video-page">
-    <!--视频部分 start-->
-    <div class="video-play" id="video-play" style="position:fixed; z-index:1001;">
+    <!--视频部分 start--><!--style="position:fixed; z-index:1001;"-->
+    <div class="video-play" id="video-play" style="position:fixed; z-index:1001;margin:auto;left:0; right:0; top:0;width:100%; ">
         <!--<video controls="controls" preload="auto" src="http://bmw2.thefront.com.cn/m2_2016/media/final.mp4" webkit-playsinline></video>-->
         <!--<video controls="controls" preload="auto" src="http://live.cloud.tencent.com/live/play.html?url=rtmp%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704&url1=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.flv&url2=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.m3u8&width=800&width=600" webkit-playsinline></video>-->
         <!--<video controls="controls" preload="auto" id="videoC" src="IDcard.mp4" webkit-playsinline-->
@@ -29,7 +29,7 @@
         <!--&gt;</video>-->
         <!--下列图片可删除，在此做视频示意-->
         <!--<img src="./img/back-img2.png" width="100%" height="100%">-->
-        <!--<iframe src="http://live.cloud.tencent.com/live/play.html?url=rtmp%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704&url1=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.flv&url2=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.m3u8" width="100%"></iframe>-->
+        <!--<iframe src="http://live.cloud.tencent.com/live/play.html?url=rtmp%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704&url1=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.flv&url2=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.m3u8" style="width: 100%;height: 400px;"></iframe>-->
     </div>
     <!--视频部分 end-->
 
@@ -42,7 +42,7 @@
                         <img src="/mobile/img/user-img.png" width="45">
                     </div>
                     <div class="user-info-text">
-                        <div class="user-info-name">美女主播朴信惠</div>
+                        <div class="user-info-name">美女主播</div>
                         <div class="user-info-num">
                             <i class="user-icon-fans"></i><span id="user-icon-fans">0</span>
                             <i class="user-icon-like"></i><span id="user-icon-like">0</span>
@@ -56,26 +56,26 @@
             <div class="video-discuss">
                 <ul class="video-sms-list" id="video_sms_list">
 
-                    <li>
-                        <div class="video-sms-pane">
-                            <div class="video-sms-text"><span class="user-name-green" >毛利晴</span>有品位</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="video-sms-pane">
-                            <div class="video-sms-text"><span class="user-name-red">近朱者赤进入房间</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="video-sms-pane">
-                            <div class="video-sms-text"><span class="user-name-blue">janzhu</span>美女你好</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="video-sms-pane">
-                            <div class="video-sms-text"><span class="user-name-org">cherylma</span>美女你好美女你好美女你好重要的事情说3遍</div>
-                        </div>
-                    </li>
+                    <!--<li>-->
+                        <!--<div class="video-sms-pane">-->
+                            <!--<div class="video-sms-text"><span class="user-name-green" >毛利晴</span>有品位</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<div class="video-sms-pane">-->
+                            <!--<div class="video-sms-text"><span class="user-name-red">近朱者赤进入房间</span></div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<div class="video-sms-pane">-->
+                            <!--<div class="video-sms-text"><span class="user-name-blue">janzhu</span>美女你好</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<div class="video-sms-pane">-->
+                            <!--<div class="video-sms-text"><span class="user-name-org">cherylma</span>美女你好美女你好美女你好重要的事情说3遍</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
 
 
                 </ul>
@@ -158,11 +158,11 @@
     if (webim.Tool.getQueryString("groupid")) {
         avChatRoomId = webim.Tool.getQueryString("groupid");//用户自定义房间群id
     }
-
     $.get("/jz/getChannelById", {"channelId":GetQueryString("channelId")}, function (result) {
         if (result.resultCode == 200) {
             var resultData=result.data;
-            var live= '<iframe src="'+resultData.channel_url+'" style="width: 100%"></iframe>';
+//            alert(resultData.channel_url);
+            var live= '<iframe src="'+resultData.channelUrl+'" style="width:100%; height:325px;  scrolling:no; " frameborder=0 allowtransparency="yes"></iframe>';
             $("#video-play").append(live);
 
             //todo 这里应该获取频道绑定的群组

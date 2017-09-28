@@ -9,11 +9,11 @@ import io.swagger.annotations.ApiParam;
  */
 public class JzChannelSearchVO extends CommonSearchVO {
 
-    @ApiParam("频道ID")
+    @ApiParam(required = false, name = "channelNo", value = "频道ID")
     private String channelNo;
-    @ApiParam("频道名称")
+    @ApiParam(required = false, name = "channelName", value = "频道名称")
     private String channelName;
-    @ApiParam("频道状态")
+    @ApiParam(required = false, name = "channelStatus", value = "频道状态")
     private Integer channelStatus;
 
     public String getChannelNo() {

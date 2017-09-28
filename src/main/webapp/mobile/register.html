@@ -99,7 +99,7 @@
 	            layer.msg("请输入手机号", { icon: 2, time: 1000 });
 	            return false;
 	        }
-	        $.get("/lw/getCaptch.do", { "phone": mobile,"state" : 1 }, function (response) {
+	        $.get("/jz/getCaptch.do", { "phone": mobile,"state" : 1 }, function (response) {
 	            console.log(response);
 	            resultCode = response.resultCode;
 	        });

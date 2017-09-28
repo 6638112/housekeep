@@ -406,8 +406,18 @@
             <artifactId>tomcat-juli</artifactId>
             <version>9.0.0.M26</version>
         </dependency>
-
-
+        <!-- 整合邮件发送 -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+        <!-- feemarker Template-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.25-incubating</version>
+        </dependency>
 
 
     </dependencies>

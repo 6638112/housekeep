@@ -198,7 +198,7 @@
     <!--自动生成器内容模版 freemarker config -->
     <bean id="freeMarkerConfigurer"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="classpath:codeModel/"/>
+        <property name="templateLoaderPath" value="classpath:/codeModel/"/>
         <property name="freemarkerSettings">
             <props>
                 <prop key="template_update_delay">0</prop>
@@ -265,9 +265,28 @@
     <!--<mvc:exclude-mapping path="/v2/**"></mvc:exclude-mapping>-->
     <!--<mvc:exclude-mapping path="/webjars/**"></mvc:exclude-mapping>-->
 
-
     <!-- 初始化执行任务 -->
     <task:annotation-driven />
+
+    <!-- 使用qq邮箱 -->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.qq.com"/>
+        <property name="port" value="587"/>
+        <property name="username" value="310869749@qq.com"/>
+        <!-- qq邮箱的授权码，如果是企业邮箱，则使用登录密码 -->
+        <property name="password" value="rypscgvqwnencbci"/>
+        <property name="javaMailProperties">
+            <props >
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--配置邮箱的发送者以及标题-->
+    <bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="310869749@qq.com" />
+        <property name="subject" value="联讯传媒注册验证" />
+    </bean>
 
 
     <!--&lt;!&ndash;active消息队列配置&ndash;&gt;-->

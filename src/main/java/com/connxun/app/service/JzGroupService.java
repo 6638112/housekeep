@@ -49,4 +49,8 @@ public class JzGroupService implements BaseService<JzGroup,Integer> {
         return jzGroupRepository.getList(searchVO);
 
     }
+    public JzGroup getGroupByGroupId(String channelId) {
+        return jzGroupRepository.getGroupByGroupId(channelId);
+
+    }
 }

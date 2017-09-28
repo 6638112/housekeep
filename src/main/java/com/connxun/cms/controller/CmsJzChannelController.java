@@ -146,6 +146,11 @@ public class CmsJzChannelController extends BaseController {
             if (list.size() > 0) {
                 for (JzChannel jzchannel :
                         list) {
+                    /*数据验重*/
+                    JzChannel jzChannel2=jzChannelService.getChannelByChannelId(jzchannel.getChannelId());
+                    if (jzChannel2!=null){
+                        jzchannel.setId(jzChannel2.getId());
+                    }
                     jzChannelService.save(jzchannel);
                 }
             }

@@ -20,7 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc
 @EnableSwagger2
 @Configuration
-//@ComponentScan(basePackages = {"com.connxun.app.controller"})
 public class SwaggerConfig {
 
     /*swagger title*/
