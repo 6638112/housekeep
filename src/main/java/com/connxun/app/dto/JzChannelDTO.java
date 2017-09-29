@@ -1,5 +1,7 @@
 package com.connxun.app.dto;
 
+import com.connxun.app.entity.JzPlayer;
+
 import java.io.Serializable;
 
 /**
@@ -11,16 +13,39 @@ public class JzChannelDTO implements Serializable {
 
     //内部ID
     Integer id;
-    //频道ID
+    //频道ID(云端)
     String channelId;
     //直播间名称
     String channelName;
     //直播间状态 0:断流；1:开启；3:关闭
     Integer channelStatus;
+    //群组ID(云端)
+    String groupId;
     //频道主播
-    String channelPlayer;
-    //频道链接
+    JzPlayer channelPlayer;
+    //频道iframe链接
     String channelUrl;
+    //对接视频播放的bizId
+    String bizId;
+
+
+
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getBizId() {
+        return bizId;
+    }
+
+    public void setBizId(String bizId) {
+        this.bizId = bizId;
+    }
 
     public Integer getId() {
         return id;
@@ -54,11 +79,11 @@ public class JzChannelDTO implements Serializable {
         this.channelStatus = channelStatus;
     }
 
-    public String getChannelPlayer() {
+    public JzPlayer getChannelPlayer() {
         return channelPlayer;
     }
 
-    public void setChannelPlayer(String channelPlayer) {
+    public void setChannelPlayer(JzPlayer channelPlayer) {
         this.channelPlayer = channelPlayer;
     }
 

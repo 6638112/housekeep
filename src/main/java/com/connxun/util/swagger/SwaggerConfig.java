@@ -1,8 +1,9 @@
 package com.connxun.util.swagger;
 
-import com.connxun.util.properties.OpeProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -20,27 +21,33 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc
 @EnableSwagger2
 @Configuration
+@PropertySource("classpath:application.properties")
 public class SwaggerConfig {
 
-    /*swagger title*/
-    private static String SWAGGER_TITLE;
-    /*wagger description*/
-    private static String SWAGGER_DESCRIPTION;;
-    /*wagger termsOfServiceUrl*/
-    private static String SWAGGER_TERM;
-    /*wagger contact*/
-    private static String SWAGGER_CONTACT;
-    /*wagger version*/
-    private static String SWAGGER_VERSION;
+    //swagger title
+    @Value("${swagger.title}")
+    private String SWAGGER_TITLE;
+    //swagger description
+    @Value("${swagger.description}")
+    private String SWAGGER_DESCRIPTION;
+    //swagger termsOfServiceUrl
+    @Value("${swagger.termsOfServiceUrl}")
+    private String SWAGGER_TERM;
+    //swagger contact
+    @Value("${swagger.contact}")
+    private String SWAGGER_CONTACT;
+    //swagger version
+    @Value("${swagger.version}")
+    private String SWAGGER_VERSION;
 
-    static{
-        OpeProperties opeProperties=new OpeProperties();
-        SWAGGER_TITLE= opeProperties.GetValueByKey("","swagger.title").trim();
-        SWAGGER_DESCRIPTION=opeProperties.GetValueByKey("","swagger.description").trim();;
-        SWAGGER_TERM=opeProperties.GetValueByKey("","swagger.termsOfServiceUrl").trim();
-        SWAGGER_CONTACT=opeProperties.GetValueByKey("","swagger.contact").trim();;
-        SWAGGER_VERSION=opeProperties.GetValueByKey("","swagger.version").trim();
-    }
+//    static{
+//        OpeProperties opeProperties=new OpeProperties();
+//        SWAGGER_TITLE= opeProperties.GetValueByKey("","swagger.title").trim();
+//        SWAGGER_DESCRIPTION=opeProperties.GetValueByKey("","swagger.description").trim();;
+//        SWAGGER_TERM=opeProperties.GetValueByKey("","swagger.termsOfServiceUrl").trim();
+//        SWAGGER_CONTACT=opeProperties.GetValueByKey("","swagger.contact").trim();;
+//        SWAGGER_VERSION=opeProperties.GetValueByKey("","swagger.version").trim();
+//    }
 
     @Bean
     public Docket createRestApi() {

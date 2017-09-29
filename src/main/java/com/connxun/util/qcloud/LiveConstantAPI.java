@@ -2,8 +2,6 @@ package com.connxun.util.qcloud;
 
 import com.connxun.util.properties.OpeProperties;
 
-import java.util.Properties;
-
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-15 16:10
@@ -22,18 +20,17 @@ public class LiveConstantAPI {
 //    //回调URL
 //    public static final String BACKURL   = "http://wx.connxun.com/wx/callback";
 
-    //bizid
-    public static final String BIZID;
-    //appid
-    public static final String APPID;
-    //API鉴权key
-    public static final String APIKEY;
-    //推流防盗链key
-    public static final String PUSHKEY;
-    //回调URL
-    public static final String BACKURL;
 
-    private static Properties pps;
+    //bizid
+    public static String BIZID;
+    //appid
+    public static String APPID;
+    //API鉴权key
+    public static String APIKEY;
+    //推流防盗链key
+    public static String PUSHKEY;
+    //回调URL
+    public static String BACKURL;
     /*静态代码块*/
     static{
         OpeProperties opeProperties=new OpeProperties();
@@ -45,18 +42,18 @@ public class LiveConstantAPI {
     }
 
     //推流地址前缀
-    public static final String LIVEPUSH="rtmp://"+BIZID+".livepush.myqcloud.com/live/";
+    public static final String LIVEPUSH = "rtmp://" + BIZID + ".livepush.myqcloud.com/live/";
     //播放地址前缀
-    public static final String LIVEPLAY="rtmp://"+BIZID+".liveplay.myqcloud.com/live/";
+    public static final String LIVEPLAY = "rtmp://" + BIZID + ".liveplay.myqcloud.com/live/";
 
     //播放地址前缀
-    public static final String PLAYURL   = "http://live.cloud.tencent.com/live/play.html?";
+    public static final String PLAYURL = "http://live.cloud.tencent.com/live/play.html?";
     //RTMP播放地址
-    public static final String RTMPPLAY   = "rtmp://"+BIZID+".liveplay.myqcloud.com/live/";
+    public static final String RTMPPLAY = "rtmp://" + BIZID + ".liveplay.myqcloud.com/live/";
     //FLV播放地址前缀
-    public static final String FLVPLAY   = "http://"+BIZID+".liveplay.myqcloud.com/live/";
+    public static final String FLVPLAY = "http://" + BIZID + ".liveplay.myqcloud.com/live/";
     //HLS播放地址前缀
-    public static final String HLSPLAY   = "http://"+BIZID+".liveplay.myqcloud.com/live/";
+    public static final String HLSPLAY = "http://" + BIZID + ".liveplay.myqcloud.com/live/";
 
     /*------------查询类接口-----------*/
     //查询直播状态

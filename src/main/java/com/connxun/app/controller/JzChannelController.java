@@ -7,6 +7,7 @@ import com.connxun.app.entity.JzChannel;
 import com.connxun.app.entity.JzUser;
 import com.connxun.app.searchVO.JzChannelSearchVO;
 import com.connxun.app.service.JzChannelService;
+import com.connxun.app.service.JzPlayerService;
 import com.connxun.app.service.JzUserService;
 import com.connxun.util.mail.PwdMailSender;
 import com.connxun.util.qcloud.LiveAddressCreate;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.connxun.util.qcloud.LiveConstantAPI.BIZID;
+
 /**
  * @Author：luoxiaosheng
  * @Date：2017-09-18 14:14
@@ -39,6 +42,8 @@ public class JzChannelController extends AppBaseController  {
     private JzUserService lwUserService;
     @Autowired
     private PwdMailSender pwdMailSender;
+    @Autowired
+    private JzPlayerService jzPlayerService;
 
     // TODO: 2017-09-25 频道关联主播没做
     /**
@@ -79,8 +84,15 @@ public class JzChannelController extends AppBaseController  {
         if (jzchannel!=null){
             jzChannelDTO=new JzChannelDTO();
             BeanUtils.copyProperties(jzchannel, jzChannelDTO);
+            /*设置BIZID*/
+            jzChannelDTO.setBizId(BIZID);
+            /*设置频道主播相关信息*/
+//            jzChannelDTO.setChannelPlayer();
+            /*设置群组相关信息*/
+//            jzChannelDTO.setGroupId();
             jzChannelDTO.setChannelUrl(LiveAddressCreate.getLivePlayAddress(jzChannelDTO.getChannelId(),0,0));
             json = objectToJson(jzChannelDTO);
+
         }else {
             json=objectToJson(new JzChannelDTO());
         }

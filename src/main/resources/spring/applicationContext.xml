@@ -270,11 +270,11 @@
 
     <!-- 使用qq邮箱 -->
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.qq.com"/>
-        <property name="port" value="587"/>
-        <property name="username" value="310869749@qq.com"/>
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}"/>
+        <property name="username" value="${mail.username}"/>
         <!-- qq邮箱的授权码，如果是企业邮箱，则使用登录密码 -->
-        <property name="password" value="rypscgvqwnencbci"/>
+        <property name="password" value="${mail.password}"/>
         <property name="javaMailProperties">
             <props >
                 <prop key="mail.smtp.auth">true</prop>
@@ -284,8 +284,8 @@
 
     <!--配置邮箱的发送者以及标题-->
     <bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="310869749@qq.com" />
-        <property name="subject" value="联讯传媒注册验证" />
+        <property name="from" value="${mail.from}" />
+        <property name="subject" value="${mail.subject}" />
     </bean>
 
 

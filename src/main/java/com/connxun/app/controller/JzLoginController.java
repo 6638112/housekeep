@@ -77,7 +77,6 @@ public class JzLoginController extends AppBaseController {
             setOrderDel(1);
 
         }*/
-        System.out.println(getOrderDel() + "========================================================");
         if (StringUtil.isNullOrEmpty(phone) || StringUtil.isNullOrEmpty(password)) {
             logger.debug(phone + "参数错误");
             return booleanToJson(false, "参数错误");

@@ -9,14 +9,21 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/mobile/css/mobile.css?v=1.0.3">
+    <link rel="stylesheet" href="css/mobile.css?v=1.0.3">
 </head>
-<body style="background-image: url('/mobile/img/back-img2.png')">
+<body style="background-image: url('img/back-img2.png')">
 <div class="video-page">
-    <!--视频部分 start--><!--style="position:fixed; z-index:1001;"-->
-    <div class="video-play" id="video-play" style="position:fixed; z-index:1001;margin:auto;left:0; right:0; top:0;width:100%; ">
-        <!--<video controls="controls" preload="auto" src="http://bmw2.thefront.com.cn/m2_2016/media/final.mp4" webkit-playsinline></video>-->
-        <!--<video controls="controls" preload="auto" src="http://live.cloud.tencent.com/live/play.html?url=rtmp%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704&url1=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.flv&url2=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.m3u8&width=800&width=600" webkit-playsinline></video>-->
+    <!--视频部分 start--><!--style="position:fixed; z-index:1001;margin:auto;left:0; right:0; top:0;width:100%; "-->
+    <div class="video-play" id="video-play" style="position:fixed; z-index:1001;margin:auto;left:0; right:0; top:0;width:100%; " >
+        <!--<video controls="controls" preload="auto" src="rtmp%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_10029" webkit-playsinline></video>-->
+
+        <!-- 直播播放容器 -->
+        <div id="id_video_container" style="width: 100%;"></div>
+
+        <!--<video controls="controls" preload="auto" src="http://live.cloud.tencent.com/live/play.html-->
+        <!--?url=rtmp%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704-->
+        <!--&url1=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.flv-->
+        <!--&url2=http%3A%2F%2F2914.liveplay.myqcloud.com%2Flive%2F2914_test201704.m3u8" webkit-playsinline></video>-->
         <!--<video controls="controls" preload="auto" id="videoC" src="IDcard.mp4" webkit-playsinline-->
                <!--poster="./img/back-img2.png"-->
                <!--x-webkit-airplay="allow"-->
@@ -39,7 +46,7 @@
             <div class="video-pane-info">
                 <div class="video-info">
                     <div class="user-img">
-                        <img src="/mobile/img/user-img.png" width="45">
+                        <img src="img/user-img.png" width="45">
                     </div>
                     <div class="user-info-text">
                         <div class="user-info-name">美女主播</div>
@@ -125,15 +132,18 @@
     </div>
 </div>
 
-<script type="text/javascript" src="/mobile/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <!--引入webim sdk-->
-<script type="text/javascript" src="/mobile/sdk/webim.js?v=1"></script>
-<script type="text/javascript" src="/mobile/sdk/json2.js"></script>
+<script type="text/javascript" src="sdk/webim.js?v=1"></script>
+<script type="text/javascript" src="sdk/json2.js"></script>
 <!--TLS web sdk(只用于托管模式，独立模式不用引入)-->
 <script type="text/javascript" src="https://tls.qcloud.com/libs/api.min.js"></script>
 <!--webim demo js-->
-<script type="text/javascript" src="/mobile/js/demo_base.js"></script>
-<script type="text/javascript" src="/mobile/js/demo_group_notice.js"></script>
+<script type="text/javascript" src="js/demo_base.js"></script>
+<script type="text/javascript" src="js/demo_group_notice.js"></script>
+
+<!--腾讯云视频初始化脚本-->
+<script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer.js" charset="utf-8"></script>;
 
 <script type="text/javascript">
 
@@ -153,7 +163,7 @@
     var sdkAppID = 1400019251;
     var accountType = 8980;
 
-    var avChatRoomId = '@TGS#aFRASB5EX';  //默认房间群ID，群类型必须是直播聊天室（AVChatRoom），这个为官方测试ID(托管模式)
+    var avChatRoomId = 'JzGroup10029';  //默认房间群ID，群类型必须是直播聊天室（AVChatRoom），这个为官方测试ID(托管模式)
 
     if (webim.Tool.getQueryString("groupid")) {
         avChatRoomId = webim.Tool.getQueryString("groupid");//用户自定义房间群id
@@ -161,9 +171,24 @@
     $.get("/jz/getChannelById", {"channelId":GetQueryString("channelId")}, function (result) {
         if (result.resultCode == 200) {
             var resultData=result.data;
-//            alert(resultData.channel_url);
-            var live= '<iframe src="'+resultData.channelUrl+'" style="width:100%; height:325px;  scrolling:no; " frameborder=0 allowtransparency="yes"></iframe>';
-            $("#video-play").append(live);
+            /*iframe嵌套*/
+//            var live= '<iframe src="'+resultData.channelUrl+'" style="width:100%; height:325px;  scrolling:no; " frameborder=0 allowtransparency="yes"></iframe>';
+//            $("#video-play").append(live);
+
+            /*对接视频的播放*/
+            var player =  new TcPlayer('id_video_container', {
+                "m3u8": "http://2914.liveplay.myqcloud.com/live/2914_10029.m3u8",
+                "flv": "http://2914.liveplay.myqcloud.com/live/2914_10029.flv", //增加了一个flv的播放地址，用于PC平台的播放 请替换成实际可用的播放地址
+                "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+                "coverpic" : {"style":"stretch", "src":"img/live1.jpg"}, //播放器设置封面
+                // "default" 居中并且以图片的实际分辨率进行显示 "stretch" 拉伸铺满播放器区域，图片可能会变形"cover" 优先横向等比拉伸铺满播放器区域，图片某些部分可能无法显示在区域内
+                "width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
+                "height" : '320',//视频的显示高度，请尽量使用视频分辨率高度
+                "wording": {
+                    2032: "请求视频失败，请检查网络",
+                    2048: "请求m3u8文件失败，可能是网络错误或者跨域问题"
+                }
+            });
 
             //todo 这里应该获取频道绑定的群组
 //            avChatRoomId=resultData.channel_id;
@@ -309,5 +334,7 @@
         $('#login_dialog').hide();
     }
 </script>
+
+
 </body>
 </html>

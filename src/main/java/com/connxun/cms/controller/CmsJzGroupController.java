@@ -205,6 +205,8 @@ public class CmsJzGroupController extends BaseController {
                     jzMemberService.save(jzMember);
                 }
 
+                System.out.println("======保存成功");
+
             }
             return new JsonResult(true, "同步更新云端数据成功");
 
